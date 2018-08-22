@@ -8,36 +8,58 @@
 
 import Foundation
 
-protocol URLBuilding{
-//    func set(host: String) -> Self
-//    func set(scheme: String) -> Self
-//    func set(path: String) -> Self
+typealias QueryPreferences = [String: String]
+
+protocol Building{
+    associatedtype BuildingType
+    func build() -> BuildingType?
 }
 
-//this is more of a facade?
+//TODO: verify if this relationship is accurate
+protocol URLBuilding: Building where BuildingType == URL{
+    func set(host: String) -> Self
+    func set(scheme: String) -> Self
+    func set(path: String) -> Self
+}
 
+//TODO; is this more of a facade?
 final class URLBuilder: URLBuilding{
     private let urlComponents = NSURLComponents()
     
-    private lazy var modifyURLComponents: (URLParts) -> () = {
-        parts in
-        
-        self.urlComponents.scheme = parts.scheme
-        self.urlComponents.host = parts.host
-        self.urlComponents.path = parts.path
-        
-        
-        if self.urlComponents.queryItems == nil {
-            self.urlComponents.queryItems = []
-        }
-        let queryItems = parts.items.map{ URLQueryItem(name: $0.key, value: $0.value) }
-        
-        self.urlComponents.queryItems?.append(contentsOf: queryItems)
+    @discardableResult
+    func set(host: String) -> Self {
+        urlComponents.host = host
+        return self
+    }
+
+    @discardableResult
+    func set(scheme: String) -> Self {
+        urlComponents.scheme = scheme
+        return self
     }
     
+    func set(path: String) -> Self {
+        urlComponents.path = path
+        return self
+    }
     
+    @discardableResult
+    func set(preferences: QueryPreferences) -> Self{
+        if urlComponents.queryItems == nil {
+            urlComponents.queryItems = []
+        }
+        
+        let queryItems = preferences.map{ makeUrlQueryItem($0) }
+        urlComponents.queryItems?.append(contentsOf: queryItems)
+        return self
+    }
     
-    
-    
-    
+    private lazy var makeUrlQueryItem:((String, String)) -> URLQueryItem = {
+        let temp = $0
+        URLQueryItem(name: $0.0, value: $0.1)
+    }
+
+    func build() -> URL?{
+        return urlComponents.url
+    }
 }

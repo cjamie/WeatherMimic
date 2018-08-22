@@ -8,10 +8,11 @@
 
 import Foundation
 
-//will take in a weather fetcher and make a call with some parameters. 
+//will just call 
 final class NetworkFacade{
-    static let weatherFether: WeatherFetcher = WeatherFetcher()
+    var weatherFether: WeatherFetching?
     
-    
-    
+    func getWeatherDate(){
+        weatherFether?.getWeather()
+    }
 }

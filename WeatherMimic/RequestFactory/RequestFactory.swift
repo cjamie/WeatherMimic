@@ -14,29 +14,32 @@ enum RequestResult{
     case URLRequest(request: URLRequest)
 }
 
-
 //will return a url or request based on parameters.
 final class RequestFactory {
     
     //this was made to be a singleton with a private constructor
     public static let shared = RequestFactory()
-    
     private let urlBuilder = URLBuilder()
     
-    func makeRequest(urlParts :URLParts, cachePolicy: URLRequest.CachePolicy?, timeoutInterval: TimeInterval?) -> RequestResult {
-        
+    func makeWeatherRequest(urlParts :URLParts, cachePolicy: URLRequest.CachePolicy? = nil, timeoutInterval: TimeInterval? = nil) -> RequestResult {
+        //TODO: modify this.
+        let url = URL(string: "")!
+
         if let cachePolicy = cachePolicy, let timeoutInterval = timeoutInterval {
             //make a URLRequest with this information.
-            
+            return requestBuilder(url, cachePolicy, timeoutInterval)
+        }else{
+
         }
+        
         fatalError()
     }
     
-    private let requestBuilder: (URL, URLRequest.CachePolicy, TimeInterval) -> URLRequest = {
+    private let requestBuilder: (URL, URLRequest.CachePolicy, TimeInterval) -> RequestResult = {
         url, policy, timeInterval in
-        URLRequest(url: url, cachePolicy: policy, timeoutInterval: timeInterval)
+        let request = URLRequest(url: url, cachePolicy: policy, timeoutInterval: timeInterval)
+        return RequestResult.URLRequest(request: request)
     }
-    
 
     private init(){ }
 }

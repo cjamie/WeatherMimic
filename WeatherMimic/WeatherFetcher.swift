@@ -9,18 +9,16 @@
 import Foundation
 
 //will make a weather call.
-protocol WeatherFetcherProtocol{
-    
+//will fetch an auth token, after it receive auth token, it will make a call with your preferences.
+
+protocol WeatherFetching{
+    func getWeather()
 }
 
-
-
-class WeatherFetcher{
-    
-    
+class WeatherFetcher: WeatherFetching{
+        
     func getWeather(){
-
+        print("code to get weather here")
     }
 }
-
 

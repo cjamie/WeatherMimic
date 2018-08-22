@@ -8,6 +8,7 @@
 
 import UIKit
 
+//this will only be displayed on the first runthrough of the app
 class WalkthroughController: UIViewController {
     
 //    var viewModel: WalkThroughViewModel
@@ -18,6 +19,7 @@ class WalkthroughController: UIViewController {
         
         print("weather controller")
     }
+    
     
     
 }
