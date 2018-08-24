@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol WalkThroughBusinessLogic{
+protocol WalkThroughViewModelProtocol{
     
 }
 
-class WalkThroughViewModel{
+class WalkThroughViewModel: WalkThroughViewModelProtocol{
 //    weak var delegate: WalkthroughController
     
     //TODO: make this weak with a protocol. 

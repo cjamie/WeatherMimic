@@ -9,6 +9,7 @@
 import Foundation
 
 typealias QueryPreferences = [String: String]
+typealias HeaderFields = [String: String]
 
 protocol Building{
     associatedtype BuildingType
@@ -20,10 +21,12 @@ protocol URLBuilding: Building where BuildingType == URL{
     func set(host: String) -> Self
     func set(scheme: String) -> Self
     func set(path: String) -> Self
+    func set(preferences: QueryPreferences) -> Self
 }
 
 //TODO; is this more of a facade?
 final class URLBuilder: URLBuilding{
+    
     private let urlComponents = NSURLComponents()
     
     @discardableResult
@@ -51,15 +54,18 @@ final class URLBuilder: URLBuilding{
         
         let queryItems = preferences.map{ makeUrlQueryItem($0) }
         urlComponents.queryItems?.append(contentsOf: queryItems)
+        
         return self
     }
     
-    private lazy var makeUrlQueryItem:((String, String)) -> URLQueryItem = {
-        let temp = $0
-        URLQueryItem(name: $0.0, value: $0.1)
-    }
-
     func build() -> URL?{
         return urlComponents.url
+    }
+
+    //MARK: Helpers
+    
+    //takes in a tuple of (String, String) and returns a URLQueryItem type
+    private lazy var makeUrlQueryItem:(_ preferences:(String, String)) -> URLQueryItem = {
+        URLQueryItem(name: $0.0, value: $0.1)
     }
 }

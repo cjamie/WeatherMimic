@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  SettingsController.swift
 //  WeatherMimic
 //
 //  Created by Admin on 8/22/18.
@@ -8,6 +8,6 @@
 
 import UIKit
 
-class SettingsController: UIViewController{
+final class SettingsController: UIViewController{
     
 }

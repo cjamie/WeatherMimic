@@ -8,6 +8,11 @@
 
 import Foundation
 
-class WeatherPresentationViewModel{
+
+protocol WeatherPresentationViewModelProtocol{
+    
+}
+
+final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol{
     
 }

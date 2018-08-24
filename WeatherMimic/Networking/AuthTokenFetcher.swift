@@ -7,16 +7,20 @@
 //
 
 import Foundation
+import os.log
 
 //this will be responsible for fetching auth token
+typealias AuthCompletion = (AuthToken) -> ()
+
 protocol AuthTokenFetching{
-    typealias completionHandler = () -> ()
-    func getAuthToken(_  completion: @escaping completionHandler)
+    func getAuthToken(_  completion: @escaping AuthCompletion)
 }
 
 class AuthTokenFetcher: AuthTokenFetching{
     //can leave this unimplemented for now and just call completion block
-    func getAuthToken(_ completion: @escaping () -> ()) {
-        completion()
+    func getAuthToken(_ completion: @escaping AuthCompletion) {
+        os_log("theres currently no implementation for getting auth token")
+        let authToken = ""
+        completion(authToken)
     }
 }

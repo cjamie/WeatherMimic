@@ -1,5 +1,5 @@
 //
-//  URLParts.swift
+//  URLConstructible.swift
 //  WeatherMimic
 //
 //  Created by Admin on 8/21/18.
@@ -9,19 +9,21 @@
 import Foundation
 
 //components needed for the URL
-typealias QueryItems = [String: String]
 
 //this protocol defines list of dependencies that a url requires
-protocol URLParts {
+//URLConstructible
+protocol URLConstructible {
     var host: String { get }
     var scheme: String { get }
     var path: String { get }
-    var items: QueryItems { get }
+    var items: QueryPreferences { get }
+    
+    init(host: String, scheme: String, path: String, items: QueryPreferences)
 }
 
-struct URLPartsConcrete: URLParts {
+struct URLConstructibleConcrete: URLConstructible {
     let host: String
     let scheme: String
     let path: String
-    var items: QueryItems
+    var items: QueryPreferences
 }
