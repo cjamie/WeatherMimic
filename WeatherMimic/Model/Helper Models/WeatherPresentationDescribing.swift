@@ -13,7 +13,7 @@ protocol WeatherPresentationDescribing{
 
     var temp: String { get }
     
-    init()
+    init(temp: String)
 }
 
 extension WeatherPresentationDescribing{
@@ -24,6 +24,7 @@ extension WeatherPresentationDescribing{
 
 struct WeatherPresentationModel: WeatherPresentationDescribing{
     
+    var temp: String
 }
 
 

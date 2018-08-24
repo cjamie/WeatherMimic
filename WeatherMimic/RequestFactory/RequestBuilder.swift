@@ -9,11 +9,15 @@
 import Foundation
 import os.log
 
-enum HTTPRequestType: String{
+enum HTTPRequestType: String {
     case GET
     case POST
     case DELETE
-    
+    case HEAD
+    case PUT
+    case CONNECT
+    case OPTIONS
+    case TRACE
 }
 
 typealias RequestModifyingClosure = (inout URLRequest) -> ()

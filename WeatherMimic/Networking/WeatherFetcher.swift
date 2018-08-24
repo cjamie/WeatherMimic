@@ -9,10 +9,10 @@
 import Foundation
 
 //this will be called after obtaining an auth token
-//will fetch an auth token, after it receive auth token, it will make a call with your preferences.
 
 typealias AuthToken = String
 
+//this is a call where we specifically use WeatherForecast as the generic type
 protocol WeatherFetching{
     func getWeather(with: AuthToken, completion: @escaping (FetchResult<WeatherForecast>) -> ())
 }
@@ -37,12 +37,22 @@ final class WeatherFetcher: WeatherFetching {
         let session = URLSession.shared
         session.invalidateAndCancel()
         
-        session.dataTask(with: weatherRequest) {
-           (data, response, error) in
-            let tuple = (data, response, error)
+        
+        
+        let handler: (Data?, URLResponse?, Error?) -> () = {
+            let tuple = ($0, $1, $2)
             let result = HTTPResponseValidator<WeatherForecast, WeatherError>(sessionTuple: tuple).validationResult
             completion(result)
-        }.resume()
+        }
+        
+        session.dataTask(with: weatherRequest, completionHandler: handler).resume()
+        
+        
+//        session.dataTask(with: weatherRequest) {
+//           (data, response, error) in
+//            let tuple = (data, response, error)
+//            completion(result)
+//        }.resume()
     }
 }
 
