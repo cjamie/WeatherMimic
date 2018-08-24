@@ -9,23 +9,25 @@
 import Foundation
 
 //we will define all of the require parameters for our view controller here
-protocol WeatherPresentationDescribing{
+protocol WeatherPresentationDescribing {
+    var stateName: String { get }
+}
 
-    var temp: String { get }
+//extension WeatherPresentationDescribing{
+//    init(stateName: String){
+//        self.init(stateName: stateName)
+//    }
+//}
+
+
+struct WeatherPresentationModel: WeatherPresentationDescribing {
     
-    init(temp: String)
-}
-
-extension WeatherPresentationDescribing{
-    init(temp: String){
-        self.init(temp: temp)
-    }
-}
-
-struct WeatherPresentationModel: WeatherPresentationDescribing{
+    var stateName: String
     
-    var temp: String
+    //Adapter pattern
 }
 
 
-//an adapter will be made to adapt the structure to our desired type. 
+
+// an adapter will be made to adapt the structure to our desired type.
+//

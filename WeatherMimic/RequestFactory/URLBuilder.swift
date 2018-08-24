@@ -17,7 +17,7 @@ protocol Building{
 }
 
 //TODO: verify if this relationship is accurate
-protocol URLBuilding: Building where BuildingType == URL{
+protocol URLBuilding: Building where BuildingType == URL {
     func set(host: String) -> Self
     func set(scheme: String) -> Self
     func set(path: String) -> Self
@@ -25,7 +25,7 @@ protocol URLBuilding: Building where BuildingType == URL{
 }
 
 //TODO; is this more of a facade?
-final class URLBuilder: URLBuilding{
+final class URLBuilder: URLBuilding {
     
     private let urlComponents = NSURLComponents()
     
@@ -58,7 +58,7 @@ final class URLBuilder: URLBuilding{
         return self
     }
     
-    func build() -> URL?{
+    func build() -> URL? {
         return urlComponents.url
     }
 

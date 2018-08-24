@@ -13,7 +13,7 @@ import Foundation
  lon is your longitude
  */
 
-struct Coordinate: Codable{
+struct Coordinate: Codable {
     var lat: Double
     var lon: Double
 }

@@ -36,6 +36,7 @@
 		84CE6E9C212F65C700D2E4A7 /* WeatherPresentationDescribing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CE6E9B212F65C700D2E4A7 /* WeatherPresentationDescribing.swift */; };
 		84CE6E9E212FACAD00D2E4A7 /* WeatherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CE6E9D212FACAD00D2E4A7 /* WeatherError.swift */; };
 		84CE6EA02130B19F00D2E4A7 /* NetworkErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CE6E9F2130B19F00D2E4A7 /* NetworkErrors.swift */; };
+		84CE6EA22130CE7700D2E4A7 /* WeatherPresentationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CE6EA12130CE7700D2E4A7 /* WeatherPresentationAdapter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		84CE6E9B212F65C700D2E4A7 /* WeatherPresentationDescribing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPresentationDescribing.swift; sourceTree = "<group>"; };
 		84CE6E9D212FACAD00D2E4A7 /* WeatherError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherError.swift; sourceTree = "<group>"; };
 		84CE6E9F2130B19F00D2E4A7 /* NetworkErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrors.swift; sourceTree = "<group>"; };
+		84CE6EA12130CE7700D2E4A7 /* WeatherPresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPresentationAdapter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 			children = (
 				84CE6E4E212C982F00D2E4A7 /* AppDelegate.swift */,
 				84CE6E65212C987C00D2E4A7 /* Extensions */,
+				84CE6EA12130CE7700D2E4A7 /* WeatherPresentationAdapter.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 			files = (
 				84CE6E88212E271C00D2E4A7 /* UIView+Helpers.swift in Sources */,
 				84CE6E9A212F619B00D2E4A7 /* HTTPResponseValidator.swift in Sources */,
+				84CE6EA22130CE7700D2E4A7 /* WeatherPresentationAdapter.swift in Sources */,
 				84CE6E83212E248E00D2E4A7 /* NetworkConstants.swift in Sources */,
 				84CE6E69212C98FD00D2E4A7 /* WalkthroughController.swift in Sources */,
 				84CE6E96212E464300D2E4A7 /* WeatherParts.swift in Sources */,

@@ -36,9 +36,7 @@ final class WeatherFetcher: WeatherFetching {
 
         let session = URLSession.shared
         session.invalidateAndCancel()
-        
-        
-        
+    
         let handler: (Data?, URLResponse?, Error?) -> () = {
             let tuple = ($0, $1, $2)
             let result = HTTPResponseValidator<WeatherForecast, WeatherError>(sessionTuple: tuple).validationResult
@@ -47,12 +45,6 @@ final class WeatherFetcher: WeatherFetching {
         
         session.dataTask(with: weatherRequest, completionHandler: handler).resume()
         
-        
-//        session.dataTask(with: weatherRequest) {
-//           (data, response, error) in
-//            let tuple = (data, response, error)
-//            completion(result)
-//        }.resume()
     }
 }
 

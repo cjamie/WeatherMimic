@@ -48,7 +48,6 @@ final class RequestFactory {
             return nil
         }
         
-        
         let modificationBlock: RequestModifyingClosure = {
             request in
             
@@ -62,8 +61,6 @@ final class RequestFactory {
             request.timeoutInterval = timeoutInterval
             request.httpMethod = requestType.rawValue
         }
-        
-        
         
         let request = URLRequest.build(modificationBlock, url: url)
         

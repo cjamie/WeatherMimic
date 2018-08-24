@@ -15,7 +15,7 @@ import Foundation
  wrather    is a group of descriptions 
  */
 
-struct WeatherDay: Codable{
+struct WeatherDay: Codable {
     var dt: Int
     var main: WeatherMain
     //    var clouds: Clouds

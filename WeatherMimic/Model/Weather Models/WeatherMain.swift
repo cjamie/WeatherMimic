@@ -17,7 +17,7 @@ import Foundation
  pressure is pressure (hpa)
  */
 
-struct WeatherMain: Codable{
+struct WeatherMain: Codable {
     var temp: Double
     var temp_min: Double
     var temp_max: Double

@@ -15,7 +15,7 @@ import Foundation
  icon a query item to get a weather icon
  */
 
-struct WeatherParts: Codable{
+struct WeatherParts: Codable {
     var id: Int
     var main: String
     var description: String

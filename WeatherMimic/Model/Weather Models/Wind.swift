@@ -13,7 +13,7 @@ import Foundation
  def is your  direction (degree)
  */
 
-struct Wind: Codable{
+struct Wind: Codable {
     var speed: Double
     var deg: Double
 }

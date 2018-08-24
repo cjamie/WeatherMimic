@@ -13,7 +13,12 @@ final class ViewController: UIViewController {
     //should this be a protocol specifically suited for view controller?
     //note: we can use adapter pattern for this.
     
-    var weatherForecast: WeatherPresentationDescribing?
+    var weatherForecast: WeatherPresentationDescribing?{
+        didSet{
+            guard let weatherForecast = weatherForecast else { return }
+            print("weather forecast here \(weatherForecast)")
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,25 +29,27 @@ final class ViewController: UIViewController {
         networkCall()
     }
     
-    func networkCall(){
+    lazy var networkCall: ()->() = {
         NetworkFacade().getWeatherData {
             fetchResult in
             switch fetchResult{
             case .failure(let err):
                 print(err.localizedDescription)
-            case .success(let instance):
-                print(instance)
+            case .success(let forecastInstance):
+                print(forecastInstance)
                 //we want to adapt this instance into a weatherPresentationDescribing type
+                self.weatherForecast = WeatherPresentationAdapter.convert(forecast: forecastInstance)
             }
         }
     }
     
-    
-    //ADAPTER PATTERN
-    //takes in a WeatherForecast and adapts it WeatherPresentationDescribing
-    func adapt(weatherForecast: WeatherForecast) -> WeatherPresentationDescribing? {
-        let temp = WeatherPresentationModel(temp: "something")        
-        return temp
+    private var populateViewClosure: (WeatherPresentationDescribing) -> () = {
+        let a = $0
+        let temp = $0.stateName
     }
+    
+    
+    
+    
 }
 

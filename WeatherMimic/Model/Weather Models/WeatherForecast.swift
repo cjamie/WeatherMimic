@@ -15,11 +15,10 @@ import Foundation
  cod is your http response code in the json
  */
 
-struct WeatherForecast: Codable{
+struct WeatherForecast: Codable {
     var cnt: Int
     var list: [WeatherDay]
     var city: City
-//    var cod: String
     var cod: String
 
 }
