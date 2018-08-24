@@ -17,7 +17,7 @@ enum NetworkErrors: Error{
     case noData
     case noResponse
     case deserializationError //or invalidJSON
-    case errorResponse(WeatherError)
+    case errorResponse(Error & Decodable)
 
 }
 

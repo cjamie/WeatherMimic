@@ -8,42 +8,44 @@
 
 import Foundation
 
-enum FetchResult{
-    case success(Data) //this will return json Data to parse/deserialize.
+enum FetchResult<T:Decodable>{
+    case success(T) //this will a deserialized instance if successful
     case failure(Error) //this will return an error you may log
 }
 
 /*
  this struct's responsibility is to comb through the data and return a validation response
- this will
-    check for the following NetworkError cases:
+ 
+ this will check for the following NetworkError cases:
         .noResponse,
         .badResponseCode(let x),
         .errorResponse(let errorJson)
         .noData
- 
- this will not:
+        .jsonDecode error for intended type
+        .deserializationError
+ this will NOT check for the following NetworkError cases:
         .malformedURL
-        .
+ 
+ the reason for this is that malformedURL gets handled before we reach here, and this will not handle the responsibility of trying to decode
  
  */
 
-
-struct HTTPResponseValidator {
-    //this will
+//T will be our type, and U will be the error json
+struct HTTPResponseValidator<T: Decodable, U: Decodable & Error> {
     private let sessionTuple: (data: Data?, response: URLResponse?, error: Error?)
 
     init(sessionTuple: (data: Data?, response: URLResponse?, error: Error?) ){
         self.sessionTuple = sessionTuple
     }
 
+    
     //this will return a Result based on
-    var validationResult: FetchResult {
+    var validationResult: FetchResult<T> {
         if let error = sessionTuple.error {
             return .failure(error)
         }
         
-        guard let responseCode  = (sessionTuple.response as? HTTPURLResponse)?.statusCode else {
+        guard let responseCode = (sessionTuple.response as? HTTPURLResponse)?.statusCode else {
             return .failure(NetworkErrors.noResponse)
         }
         
@@ -54,17 +56,23 @@ struct HTTPResponseValidator {
         guard let data = sessionTuple.data else {
             return .failure(NetworkErrors.noData)
         }
+
+        let errorResponse: U? = validate(data: data) //this line became necessary because it is generic function
+        if let validErrorResponse = errorResponse {
+            return .failure(NetworkErrors.errorResponse(validErrorResponse ))
+        }
         
+        let weatherForecast: T? = validate(data: data)
+        guard let validWeatherForecast = weatherForecast else {
+            return .failure(NetworkErrors.deserializationError)
+        }
+
+        return .success(validWeatherForecast)
         
-        return validate(data: data) ?? .success(data)
     }
     
-    // TODO: verify different configurations for this json
-    // cms may return a json that is interpretted as an error json
-    // this function
-    private func validate(data asErrorJson: Data) -> FetchResult?{
-        guard let weatherError = try? JSONDecoder().decode(WeatherError.self, from: asErrorJson) else { return nil }
-        return .failure(NetworkErrors.errorResponse(weatherError))
-    }
     
+    private func validate<V: Decodable>(data: Data) -> V? {
+        return try? JSONDecoder().decode(V.self, from: data)
+    }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WeatherError: Codable{
+struct WeatherError: Error, Codable{
     var cod: Int
     var message: String
 }

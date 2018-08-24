@@ -66,14 +66,14 @@ final class RequestFactory {
         
         print("checking the request ")
         
-        let printables = [
-            request.allHTTPHeaderFields,
-            request.url,
+        let printables: [Any] = [
+            request.allHTTPHeaderFields ?? [:],
+            request.url ?? URL(string:"google.com")!,
             request.cachePolicy.rawValue,
             request.timeoutInterval,
-            request.httpMethod
-            ].flatMap{$0}
-        
+            request.httpMethod ?? "POST"
+        ].compactMap{$0}
+
         printables.forEach{ print($0) }
         
         return request

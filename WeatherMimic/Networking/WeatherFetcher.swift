@@ -34,23 +34,23 @@ final class WeatherFetcher: WeatherFetching{
         
 
         let session = URLSession.shared
+
         session.invalidateAndCancel()
+        
         session.dataTask(with: weatherRequest) {
-            (data, response, error) in
- 
+            [weak self] (data, response, error) in
+            
             let tuple = (data, response, error)
-            
-            let result = HTTPResponseValidator(sessionTuple: tuple).validationResult
-            
+            let result = HTTPResponseValidator<WeatherForecast, WeatherError>(sessionTuple: tuple).validationResult
+
             switch result{
-                //we can pattern match to the error or data
-            case .failure(let err):
-                print()
-            case .success(let data):
-                print() //this is a placeholder for now
+            case .failure(let myError): //we can pattern match to the error or data
+                completion(nil, myError)
+                return
+            case .success(let codable):
+                completion(codable, nil)
+                return
             }
-            
-            
         }
     }
 }
