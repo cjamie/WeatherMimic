@@ -21,6 +21,10 @@ final class ViewController: UIViewController {
         view.backgroundColor = UIColor.blue
         print("weather controller")
         
+        networkCall()
+    }
+    
+    func networkCall(){
         NetworkFacade().getWeatherData {
             fetchResult in
             switch fetchResult{
@@ -33,10 +37,12 @@ final class ViewController: UIViewController {
         }
     }
     
+    
+    //ADAPTER PATTERN
     //takes in a WeatherForecast and adapts it WeatherPresentationDescribing
-    func adapt(weatherForecast: WeatherForecast)->WeatherPresentationDescribing?{
-        
-        return nil
+    func adapt(weatherForecast: WeatherForecast) -> WeatherPresentationDescribing? {
+        let temp = WeatherPresentationModel(temp: "something")        
+        return temp
     }
 }
 

@@ -18,7 +18,7 @@ protocol WeatherFetching{
 }
 
 //this will bubble up the responsibiltiy of providing a closure to the caller
-final class WeatherFetcher: WeatherFetching{
+final class WeatherFetcher: WeatherFetching {
     
     func getWeather(with: AuthToken, completion: @escaping (FetchResult<WeatherForecast>) -> ()) {
         //calls request factory to create a request

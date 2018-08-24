@@ -20,6 +20,7 @@ enum NetworkErrors: Error {
 extension NetworkErrors: LocalizedError{
     public var errorDescription: String? {
         let descriptionString: String
+        
         switch self {
         case .malformedURL:
             descriptionString = NSLocalizedString("A user-friendly description of the error.", comment: "My error")
@@ -34,6 +35,7 @@ extension NetworkErrors: LocalizedError{
         case .errorResponse(let x):
             descriptionString = NSLocalizedString("Server responded with an error json", comment: "errorResponse:\(x)")
         }
+        
         return descriptionString
     }
 }

@@ -10,6 +10,19 @@ import Foundation
 
 //we will define all of the require parameters for our view controller here
 protocol WeatherPresentationDescribing{
+
+    var temp: String { get }
+    
+    init()
+}
+
+extension WeatherPresentationDescribing{
+    init(temp: String){
+        self.init(temp: temp)
+    }
+}
+
+struct WeatherPresentationModel: WeatherPresentationDescribing{
     
 }
 

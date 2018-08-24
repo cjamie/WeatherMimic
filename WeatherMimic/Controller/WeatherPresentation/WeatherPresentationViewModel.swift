@@ -10,8 +10,9 @@ import Foundation
 
 
 protocol WeatherPresentationViewModelProtocol{
-    
 }
+
+
 
 final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol{
     

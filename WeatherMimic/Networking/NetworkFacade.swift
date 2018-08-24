@@ -12,7 +12,6 @@ import os.log
 typealias ErrorJson = [String: Any]
 typealias ResponseCode = Int
 
-
 //responsible for getting an auth token, and then calling getWeather with the token
 final class NetworkFacade {
     let authTokenFetcher: AuthTokenFetching
