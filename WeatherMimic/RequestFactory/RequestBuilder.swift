@@ -21,7 +21,6 @@ typealias RequestModifyingClosure = (inout URLRequest) -> ()
 final class RequestFactory {
     //this was made to be a singleton with a private constructor
     public static let shared = RequestFactory()
-    
     private let urlBuilder = URLBuilder()
     
     private lazy var getURL: (URLConstructible) -> URL? = {
@@ -78,7 +77,6 @@ final class RequestFactory {
         
         return request
     }
-    
     private init(){ }
 }
 

@@ -7,23 +7,14 @@
 //
 
 import Foundation
+import os.log
 
 typealias ErrorJson = [String: Any]
 typealias ResponseCode = Int
 
-enum NetworkErrors: Error{
-    case malformedURL
-    case badResponseCode(ResponseCode)
-    case noData
-    case noResponse
-    case deserializationError //or invalidJSON
-    case errorResponse(Error & Decodable)
 
-}
-
-
-//responsible for getting an auth token, and then calling getWeather with it.
-final class NetworkFacade{
+//responsible for getting an auth token, and then calling getWeather with the token
+final class NetworkFacade {
     let authTokenFetcher: AuthTokenFetching
     let weatherFether: WeatherFetching
     
@@ -32,26 +23,10 @@ final class NetworkFacade{
         self.weatherFether = weatherFether
     }
     
-    func getWeatherData(completion: @escaping (WeatherForecast?, Error?)-> ()){
-     
+    func getWeatherData(completion: @escaping (FetchResult<WeatherForecast>) -> ()) {
         authTokenFetcher.getAuthToken {
-            token in
-            
-            self.weatherFether.getWeather(with: token, completion: {
-                forecast, error in
-                
-                if let error = error {
-                    print(error.localizedDescription)
-                    completion(nil, error)
-                    return
-                }
-                
-                guard let forecast = forecast else {
-                    completion(nil, NetworkErrors.noData)
-                    return
-                }
-                
-            })
+            [weak self] token in
+            self?.weatherFether.getWeather(with: token, completion: { completion($0) })
          }
     }
 }

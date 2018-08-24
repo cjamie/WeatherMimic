@@ -19,7 +19,9 @@ struct WeatherForecast: Codable{
     var cnt: Int
     var list: [WeatherDay]
     var city: City
-    var cod: Int
+//    var cod: String
+    var cod: String
+
 }
 
 

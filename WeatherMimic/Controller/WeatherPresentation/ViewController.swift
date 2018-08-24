@@ -20,11 +20,23 @@ final class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         view.backgroundColor = UIColor.blue
         print("weather controller")
-        NetworkFacade().getWeatherData {
-            (forecast, error) in
-            
-        }
         
+        NetworkFacade().getWeatherData {
+            fetchResult in
+            switch fetchResult{
+            case .failure(let err):
+                print(err.localizedDescription)
+            case .success(let instance):
+                print(instance)
+                //we want to adapt this instance into a weatherPresentationDescribing type
+            }
+        }
+    }
+    
+    //takes in a WeatherForecast and adapts it WeatherPresentationDescribing
+    func adapt(weatherForecast: WeatherForecast)->WeatherPresentationDescribing?{
+        
+        return nil
     }
 }
 

@@ -8,50 +8,41 @@
 
 import Foundation
 
-//will make a weather call.
+//this will be called after obtaining an auth token
 //will fetch an auth token, after it receive auth token, it will make a call with your preferences.
 
 typealias AuthToken = String
 
 protocol WeatherFetching{
-    func getWeather(with: AuthToken, completion: @escaping (WeatherForecast?, Error?)->())
+    func getWeather(with: AuthToken, completion: @escaping (FetchResult<WeatherForecast>) -> ())
 }
 
+//this will bubble up the responsibiltiy of providing a closure to the caller
 final class WeatherFetcher: WeatherFetching{
     
-    func getWeather(with: AuthToken, completion: @escaping (WeatherForecast?, Error?) -> ()) {
-    //calls request factory to create a request
-        //todo: experiment with core data.
+    func getWeather(with: AuthToken, completion: @escaping (FetchResult<WeatherForecast>) -> ()) {
+        //calls request factory to create a request
+        //TODO: experiment with core data.
+        
         let dependencies = URLConstructibleConcrete(host: NetworkConstants.Weather.host,
-                                 scheme: NetworkConstants.Weather.scheme,
-                                 path: NetworkConstants.Weather.path,
-                                 items: NetworkConstants.Weather.defaultItems)
+                                                    scheme: NetworkConstants.Weather.scheme,
+                                                    path: NetworkConstants.Weather.path,
+                                                    items: NetworkConstants.Weather.defaultItems)
         
         guard let weatherRequest = RequestFactory.shared.makeWeatherRequest(urlParts: dependencies) else {
             //failure to make a proper url
             return
         }
-        
 
         let session = URLSession.shared
-
         session.invalidateAndCancel()
         
         session.dataTask(with: weatherRequest) {
-            [weak self] (data, response, error) in
-            
+           (data, response, error) in
             let tuple = (data, response, error)
             let result = HTTPResponseValidator<WeatherForecast, WeatherError>(sessionTuple: tuple).validationResult
-
-            switch result{
-            case .failure(let myError): //we can pattern match to the error or data
-                completion(nil, myError)
-                return
-            case .success(let codable):
-                completion(codable, nil)
-                return
-            }
-        }
+            completion(result)
+        }.resume()
     }
 }
 

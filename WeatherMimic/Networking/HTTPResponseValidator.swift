@@ -26,19 +26,17 @@ enum FetchResult<T:Decodable>{
  this will NOT check for the following NetworkError cases:
         .malformedURL
  
- the reason for this is that malformedURL gets handled before we reach here, and this will not handle the responsibility of trying to decode
- 
+ the reason for this is that malformedURL gets handled before we reach here but this will handle everything else
  */
 
 //T will be our type, and U will be the error json
 struct HTTPResponseValidator<T: Decodable, U: Decodable & Error> {
     private let sessionTuple: (data: Data?, response: URLResponse?, error: Error?)
 
-    init(sessionTuple: (data: Data?, response: URLResponse?, error: Error?) ){
+    init(sessionTuple: (data: Data?, response: URLResponse?, error: Error?)) {
         self.sessionTuple = sessionTuple
     }
 
-    
     //this will return a Result based on
     var validationResult: FetchResult<T> {
         if let error = sessionTuple.error {
@@ -59,20 +57,23 @@ struct HTTPResponseValidator<T: Decodable, U: Decodable & Error> {
 
         let errorResponse: U? = validate(data: data) //this line became necessary because it is generic function
         if let validErrorResponse = errorResponse {
-            return .failure(NetworkErrors.errorResponse(validErrorResponse ))
+            print("valid error response?")
+            return .failure(NetworkErrors.errorResponse(validErrorResponse))
         }
         
         let weatherForecast: T? = validate(data: data)
         guard let validWeatherForecast = weatherForecast else {
+            print("serialization error for type: \(type(of: weatherForecast))")
             return .failure(NetworkErrors.deserializationError)
         }
 
         return .success(validWeatherForecast)
-        
     }
     
+    //MARK: Helper function
     
     private func validate<V: Decodable>(data: Data) -> V? {
-        return try? JSONDecoder().decode(V.self, from: data)
+        let temp = try? JSONDecoder().decode(V.self, from: data)
+        return temp
     }
 }

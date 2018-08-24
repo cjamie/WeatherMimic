@@ -15,12 +15,12 @@ enum NetworkConstants{
         static let host = "api.openweathermap.org"
         static let path = "/data/2.5/forecast"
         
-        //these will be the default items, and will vary dependening on user defaults. s
+        //these will be the default items, and will vary depending on user defaults.
         static var defaultItems: [String: String] = [
             "id":"3342",  //
             "q":"Boston", //q denotes the city
             "units":"Imperial",
-            "cnd":"5", //default number of dates will be this.
+            "cnt":"5", //default number of dates will be this.
             //API KEY
             "appid":"50a2ca8b91084f6abba83ae937599fb9"
         ]
