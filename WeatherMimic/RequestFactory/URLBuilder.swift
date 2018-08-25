@@ -24,17 +24,26 @@ protocol URLBuilding: Building where BuildingType == URL {
     func set(preferences: QueryPreferences) -> Self
 }
 
-//TODO; is this more of a facade?
-final class URLBuilder: URLBuilding {
+//TODO: is this more of a facade?
+final class URLBuilder {
     
     private let urlComponents = NSURLComponents()
     
+    //MARK: Helpers
+    
+    //takes in a tuple of (String, String) and returns a URLQueryItem type
+    private lazy var makeUrlQueryItem:(_ preferences: (String, String) ) -> URLQueryItem = {
+        URLQueryItem(name: $0.0, value: $0.1)
+    }
+}
+
+extension URLBuilder: URLBuilding {
     @discardableResult
     func set(host: String) -> Self {
         urlComponents.host = host
         return self
     }
-
+    
     @discardableResult
     func set(scheme: String) -> Self {
         urlComponents.scheme = scheme
@@ -47,12 +56,12 @@ final class URLBuilder: URLBuilding {
     }
     
     @discardableResult
-    func set(preferences: QueryPreferences) -> Self{
+    func set(preferences: QueryPreferences) -> Self {
         if urlComponents.queryItems == nil {
             urlComponents.queryItems = []
         }
         
-        let queryItems = preferences.map{ makeUrlQueryItem($0) }
+        let queryItems = preferences.map(makeUrlQueryItem)
         urlComponents.queryItems?.append(contentsOf: queryItems)
         
         return self
@@ -60,12 +69,5 @@ final class URLBuilder: URLBuilding {
     
     func build() -> URL? {
         return urlComponents.url
-    }
-
-    //MARK: Helpers
-    
-    //takes in a tuple of (String, String) and returns a URLQueryItem type
-    private lazy var makeUrlQueryItem:(_ preferences:(String, String)) -> URLQueryItem = {
-        URLQueryItem(name: $0.0, value: $0.1)
     }
 }

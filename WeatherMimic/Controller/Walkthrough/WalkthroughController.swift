@@ -19,8 +19,5 @@ class WalkthroughController: UIViewController {
         
         print("weather controller")
     }
-    
-    
-    
 }
 

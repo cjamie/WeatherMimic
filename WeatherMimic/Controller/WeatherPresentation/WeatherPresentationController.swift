@@ -7,29 +7,26 @@
 //
 
 import UIKit
+typealias VoidVoidHandler = () -> ()
+typealias NetworkCallHandler = VoidVoidHandler
 
-final class ViewController: UIViewController {
+final class WeatherPresentationController: UIViewController {
 
     //should this be a protocol specifically suited for view controller?
     //note: we can use adapter pattern for this.
     
-    var weatherForecast: WeatherPresentationDescribing?{
-        didSet{
-            guard let weatherForecast = weatherForecast else { return }
-            print("weather forecast here \(weatherForecast)")
-        }
-    }
+    var weatherForecast: WeatherPresentationDescribing?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         view.backgroundColor = UIColor.blue
-        print("weather controller")
+        print("weather presentation controller ")
         
         networkCall()
     }
     
-    lazy var networkCall: ()->() = {
+    lazy var networkCall: NetworkCallHandler = {
         NetworkFacade().getWeatherData {
             fetchResult in
             switch fetchResult{
@@ -43,13 +40,10 @@ final class ViewController: UIViewController {
         }
     }
     
+    //populate your controller here.
     private var populateViewClosure: (WeatherPresentationDescribing) -> () = {
         let a = $0
         let temp = $0.stateName
     }
-    
-    
-    
-    
 }
 

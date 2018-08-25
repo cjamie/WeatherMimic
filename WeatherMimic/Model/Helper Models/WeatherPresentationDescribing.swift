@@ -13,11 +13,6 @@ protocol WeatherPresentationDescribing {
     var stateName: String { get }
 }
 
-//extension WeatherPresentationDescribing{
-//    init(stateName: String){
-//        self.init(stateName: stateName)
-//    }
-//}
 
 
 struct WeatherPresentationModel: WeatherPresentationDescribing {
@@ -31,3 +26,5 @@ struct WeatherPresentationModel: WeatherPresentationDescribing {
 
 // an adapter will be made to adapt the structure to our desired type.
 //
+
+

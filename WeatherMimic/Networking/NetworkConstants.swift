@@ -9,8 +9,8 @@
 import Foundation
 
 //will create a namespace for constants
-enum NetworkConstants{
-    enum Weather{
+enum NetworkConstants {
+    enum Weather {
         static let scheme = "https"
         static let host = "api.openweathermap.org"
         static let path = "/data/2.5/forecast"

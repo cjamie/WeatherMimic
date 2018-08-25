@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 extension UIView{
     
     //MARK: anchoring helper function
@@ -39,3 +40,15 @@ extension UIView{
         }
     }
 }
+
+
+//Builder?
+
+extension UIView {
+    static func build(block: LabelBuilder) -> UILabel {
+        let label = UILabel()
+        block(label)
+        return label
+    }
+}
+
