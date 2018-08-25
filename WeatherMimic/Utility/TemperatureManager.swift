@@ -10,19 +10,20 @@ import Foundation
 
 typealias Kelvin = Double
 
-
 //TODO: make some unit tests for this
 struct TemperatureManager{
     //will store the temperature internally as a Kelvin
     let temperature: Kelvin
     
-    enum Constants{
+    private enum Constants{
         static let kelvinZero = 273.15
         static let fahrenHeitModifier: Double = 9/5
         static let fahrenheitToKelvinConstant = 459.67
         static let fahrenheitToKelvinModifier: Double = 5/9
 
     }
+    
+    //init
     
     init(kelvin: Kelvin){
         self.temperature = kelvin
@@ -41,14 +42,21 @@ struct TemperatureManager{
         
         self.init(kelvin: kelvin)
     }
+}
+
+extension TemperatureManager {
     
-    var asCelcius: (Kelvin) -> Double = {
-        return $0 - Constants.kelvinZero
+    var asKelvin: Double {
+        return temperature
+    }
+    
+    var asCelcius: Double {
+        return temperature - Constants.kelvinZero
     }
     
 //    T(°F) = T(K) × 9/5 - 459.67
-    var asFahrenheit: (Kelvin) -> Double = {
-        ($0 * Constants.fahrenHeitModifier) - Constants.fahrenheitToKelvinModifier
+    var asFahrenheit: Double {
+        return (temperature * Constants.fahrenHeitModifier) - Constants.fahrenheitToKelvinModifier
     }
 }
 
