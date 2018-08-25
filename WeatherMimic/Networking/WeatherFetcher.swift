@@ -20,15 +20,17 @@ protocol WeatherFetching{
 //this will bubble up the responsibiltiy of providing a closure to the caller
 final class WeatherFetcher: WeatherFetching {
     
+    var dependencies: URLConstructible {
+        return URLConstructibleConcrete(host: NetworkConstants.Weather.host,
+                                        scheme: NetworkConstants.Weather.scheme,
+                                        path: NetworkConstants.Weather.path,
+                                        items: NetworkConstants.Weather.defaultItems)
+    }
+    
     func getWeather(with: AuthToken, completion: @escaping (FetchResult<WeatherForecast>) -> ()) {
         //calls request factory to create a request
         //TODO: experiment with core data.
-        
-        let dependencies = URLConstructibleConcrete(host: NetworkConstants.Weather.host,
-                                                    scheme: NetworkConstants.Weather.scheme,
-                                                    path: NetworkConstants.Weather.path,
-                                                    items: NetworkConstants.Weather.defaultItems)
-        
+                
         guard let weatherRequest = RequestFactory.shared.makeWeatherRequest(urlParts: dependencies) else {
             //failure to make a proper url
             return

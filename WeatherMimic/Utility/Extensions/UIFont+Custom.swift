@@ -8,14 +8,30 @@
 
 import UIKit
 
+private typealias NameSizeTuple = (name: String, size: CGFloat)
+
+private enum FontComponents {
+    case headlineCity
+    case headlineDescription
+}
+
+extension FontComponents {
+    var value: NameSizeTuple {
+        switch self {
+        case .headlineCity:
+            return ("AvenirNext-Medium", 20)
+        case .headlineDescription:
+            return ("AvenirNext-Medium", 16)
+        }
+    }
+}
+
 extension UIFont {
-    private enum FontComponents{
-        static let headline: (name: String, size: CGFloat) = ("AvenirNext-Medium", 20)
-        
-    }
     
-    static var weatherMimicHeadline: UIFont {
-        return UIFont(name: FontComponents.headline.name, size: FontComponents.headline.size) ?? UIFont()
-    }
+    static let weatherMimicHeadlineCity: UIFont = UIFont(withNameSize: .headlineCity) ?? UIFont()
+    static let weatherMimicHeadlineDescription: UIFont = UIFont(withNameSize: .headlineDescription) ?? UIFont()
     
+    private convenience init?(withNameSize tuple: FontComponents) {
+        self.init(name: tuple.value.name, size: tuple.value.size)
+    }
 }

@@ -41,6 +41,7 @@
 		84CE6EA72130D7B000D2E4A7 /* LocalizedCopyForWeatherMimic.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84CE6EA62130D7B000D2E4A7 /* LocalizedCopyForWeatherMimic.strings */; };
 		84CE6EA92131DA8F00D2E4A7 /* WeatherPresentationHeadline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CE6EA82131DA8F00D2E4A7 /* WeatherPresentationHeadline.swift */; };
 		84CE6EAD2131E06400D2E4A7 /* UIFont+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CE6EAC2131E06400D2E4A7 /* UIFont+Custom.swift */; };
+		84CE6EAF2131EDFF00D2E4A7 /* TemperatureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CE6EAE2131EDFF00D2E4A7 /* TemperatureManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		84CE6EA62130D7B000D2E4A7 /* LocalizedCopyForWeatherMimic.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = LocalizedCopyForWeatherMimic.strings; sourceTree = "<group>"; };
 		84CE6EA82131DA8F00D2E4A7 /* WeatherPresentationHeadline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPresentationHeadline.swift; sourceTree = "<group>"; };
 		84CE6EAC2131E06400D2E4A7 /* UIFont+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Custom.swift"; sourceTree = "<group>"; };
+		84CE6EAE2131EDFF00D2E4A7 /* TemperatureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 				84CE6E4E212C982F00D2E4A7 /* AppDelegate.swift */,
 				84CE6E65212C987C00D2E4A7 /* Extensions */,
 				84CE6EA12130CE7700D2E4A7 /* WeatherPresentationAdapter.swift */,
+				84CE6EAE2131EDFF00D2E4A7 /* TemperatureManager.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				84CE6E86212E26F900D2E4A7 /* SettingsController.swift in Sources */,
 				84CE6E6F212CA0D800D2E4A7 /* NetworkFacade.swift in Sources */,
 				84CE6EAD2131E06400D2E4A7 /* UIFont+Custom.swift in Sources */,
+				84CE6EAF2131EDFF00D2E4A7 /* TemperatureManager.swift in Sources */,
 				84CE6E71212CA0E600D2E4A7 /* WeatherFetcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
