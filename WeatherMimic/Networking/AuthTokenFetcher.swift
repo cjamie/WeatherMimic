@@ -17,7 +17,7 @@ protocol AuthTokenFetching {
     func getAuthToken(_  completion: @escaping AuthCompletion)
 }
 
-class AuthTokenFetcher: AuthTokenFetching {
+extension AuthTokenFetching{
     //can leave this unimplemented for now and just call completion block
     func getAuthToken(_ completion: @escaping AuthCompletion) {
         os_log("theres currently no implementation for getting auth token")
@@ -26,3 +26,4 @@ class AuthTokenFetcher: AuthTokenFetching {
         
     }
 }
+class AuthTokenFetcher: AuthTokenFetching { }

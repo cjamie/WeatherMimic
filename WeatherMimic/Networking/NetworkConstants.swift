@@ -18,7 +18,7 @@ enum NetworkConstants {
         //these will be the default items, and will vary depending on user defaults.
         static var defaultItems: [String: String] = [
             "id":"3342",  //
-            "q":"Boston", //q denotes the city
+            "q":"Boston", // q denotes the city
             "units":"Imperial",
             "cnt":"5", //default number of dates will be this.
             //API KEY
@@ -29,6 +29,6 @@ enum NetworkConstants {
 
 
 // MARK: will add helper functions for convenience. 
-extension NetworkConstants{
+extension NetworkConstants {
     
 }

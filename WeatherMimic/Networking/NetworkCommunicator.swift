@@ -1,5 +1,5 @@
 //
-//  NetworkFacade.swift
+//  NetworkCommunicator.swift
 //  WeatherMimic
 //
 //  Created by Admin on 8/21/18.
@@ -9,23 +9,33 @@
 import Foundation
 import os.log
 
-typealias ErrorJson = [String: Any]
 typealias ResponseCode = Int
 
 //responsible for getting an auth token, and then calling getWeather with the token
-final class NetworkFacade {
+
+
+//Concret
+//TODO: add all of the ~necessary~ implementations inside of extensions
+final class NetworkCommunicator: WeatherFetching {
     let authTokenFetcher: AuthTokenFetching
-    let weatherFether: WeatherFetching
     
-    init(authTokenFetcher: AuthTokenFetching = AuthTokenFetcher(), weatherFether: WeatherFetching = WeatherFetcher()){
+    init(authTokenFetcher: AuthTokenFetching) {
         self.authTokenFetcher = authTokenFetcher
-        self.weatherFether = weatherFether
+        
     }
-    
+
     func getWeatherData(completion: @escaping (FetchResult<WeatherForecast>) -> ()) {
         authTokenFetcher.getAuthToken {
             [weak self] token in
-            self?.weatherFether.getWeather(with: token, completion: { completion($0) })
+            self?.getWeather(with: token, completion: { completion($0) })
+
          }
     }
 }
+
+extension NetworkCommunicator{
+    convenience init() {
+        self.init(authTokenFetcher: AuthTokenFetcher())
+    }
+}
+

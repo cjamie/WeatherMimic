@@ -7,8 +7,9 @@
 //
 
 import UIKit
-typealias VoidVoidHandler = () -> ()
-typealias NetworkCallHandler = VoidVoidHandler
+import os
+
+typealias NetworkCallHandler = () -> ()
 
 final class WeatherPresentationController: UIViewController {
 
@@ -27,11 +28,12 @@ final class WeatherPresentationController: UIViewController {
     }
     
     lazy var networkCall: NetworkCallHandler = {
-        NetworkFacade().getWeatherData {
+        NetworkCommunicator().getWeatherData {
             fetchResult in
             switch fetchResult{
             case .failure(let err):
                 print(err.localizedDescription)
+                os_log("error received in network communicator", log: .default, type: .debug)
             case .success(let forecastInstance):
                 print(forecastInstance)
                 //we want to adapt this instance into a weatherPresentationDescribing type

@@ -30,7 +30,9 @@ enum FetchResult<T:Decodable>{
  */
 
 //T will be our type, and U will be the error json
+
 struct HTTPResponseValidator<T: Decodable, U: Decodable & Error> {
+    private let validResponseCodes = (200..<300)
     private let sessionTuple: (data: Data?, response: URLResponse?, error: Error?)
 
     init(sessionTuple: (data: Data?, response: URLResponse?, error: Error?)) {
@@ -47,7 +49,7 @@ struct HTTPResponseValidator<T: Decodable, U: Decodable & Error> {
             return .failure(NetworkErrors.noResponse)
         }
         
-        guard (200..<300).contains(responseCode) else {
+        guard validResponseCodes.contains(responseCode) else {
             return .failure(NetworkErrors.badResponseCode(responseCode))
         }
 

@@ -7,13 +7,13 @@
 //
 
 import Foundation
-
+import os.log
 //this will be called after obtaining an auth token
 
 typealias AuthToken = String
 
 //this is a call where we specifically use WeatherForecast as the generic type
-protocol WeatherFetching{
+protocol WeatherFetching: class, Fetcher {
     func getWeather(with: AuthToken, completion: @escaping (FetchResult<WeatherForecast>) -> ())
 }
 
@@ -21,19 +21,10 @@ protocol WeatherFetching{
 
 extension WeatherFetching {
     
-    private var privateDependencies: URLConstructible? {
-        return nil
+    //we can specify our fetch session her
+    var fetchSession: URLSession {
+        return URLSession(configuration: .ephemeral)
     }
-    
-    func getWeather(with: AuthToken, completion: @escaping (FetchResult<WeatherForecast>) -> ()) {
-        
-    }
-}
-
-
-
-//this will bubble up the responsibiltiy of providing a closure to the caller
-final class WeatherFetcher: WeatherFetching {
     
     var dependencies: URLConstructible {
         return URLConstructibleConcrete(host: NetworkConstants.Weather.host,
@@ -43,25 +34,36 @@ final class WeatherFetcher: WeatherFetching {
     }
     
     func getWeather(with: AuthToken, completion: @escaping (FetchResult<WeatherForecast>) -> ()) {
-        //calls request factory to create a request
         //TODO: experiment with core data.
+        //we should have a default url already because we conform to Fetching
+        print("using default implementatino of WeatherFetching")
         
-        guard let weatherRequest = RequestFactory.shared.makeWeatherRequest(urlParts: dependencies) else {
+        guard let weatherRequest = RequestFactory.shared.makeWeatherRequest(url: url) else {
             //failure to make a proper url
             return
         }
 
-        let session = URLSession.shared
-        session.invalidateAndCancel()
+        fetchSession.invalidateAndCancel()
     
         let handler: (Data?, URLResponse?, Error?) -> () = {
             let tuple = ($0, $1, $2)
             let result = HTTPResponseValidator<WeatherForecast, WeatherError>(sessionTuple: tuple).validationResult
             completion(result)
         }
-        
-        session.dataTask(with: weatherRequest, completionHandler: handler).resume()
-        
+        fetchSession.dataTask(with: weatherRequest, completionHandler: handler).resume()
     }
+
 }
+
+
+
+//this will bubble up the responsibiltiy of providing a closure to the caller
+final class WeatherFetcher: WeatherFetching {
+    
+}
+
+
+
+
+
 
