@@ -17,6 +17,21 @@ protocol WeatherFetching{
     func getWeather(with: AuthToken, completion: @escaping (FetchResult<WeatherForecast>) -> ())
 }
 
+//it will have default functionality
+
+extension WeatherFetching {
+    
+    private var privateDependencies: URLConstructible? {
+        return nil
+    }
+    
+    func getWeather(with: AuthToken, completion: @escaping (FetchResult<WeatherForecast>) -> ()) {
+        
+    }
+}
+
+
+
 //this will bubble up the responsibiltiy of providing a closure to the caller
 final class WeatherFetcher: WeatherFetching {
     
@@ -30,7 +45,7 @@ final class WeatherFetcher: WeatherFetching {
     func getWeather(with: AuthToken, completion: @escaping (FetchResult<WeatherForecast>) -> ()) {
         //calls request factory to create a request
         //TODO: experiment with core data.
-                
+        
         guard let weatherRequest = RequestFactory.shared.makeWeatherRequest(urlParts: dependencies) else {
             //failure to make a proper url
             return

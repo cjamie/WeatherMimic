@@ -78,6 +78,7 @@ final class RequestFactory {
         
         return request
     }
+    
     private init(){ }
 }
 

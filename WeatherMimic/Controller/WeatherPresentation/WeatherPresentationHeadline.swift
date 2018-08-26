@@ -19,27 +19,32 @@ final class WeatherPresentationHeadlineCell: UICollectionViewCell {
 
     var dependency: HeadlineDependency?
     
-    lazy var modifyCityNameLabel: LabelBuilder = {
+    
+    //closures to help instantiate
+    lazy var cityNameLabelModifer: LabelBuilder = {
         label in
         label.text = self.dependency?.cityName
         label.font = UIFont.weatherMimicHeadlineCity
     }
     
-    lazy var modifyWeatherDescriptionLabel: LabelBuilder = {
+    lazy var weatherDescriptionLabelModifier: LabelBuilder = {
         label in
         label.font = UIFont.weatherMimicHeadlineDescription
+        label.text = self.dependency?.weatherDescription
     }
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        let cityLabel = UILabel.build(block: modifyCityNameLabel)
+        //this will create a label with city label attributes
+        let cityLabel = UILabel.build(block: cityNameLabelModifer)
+        let descriptionLabel = UILabel.build(block: weatherDescriptionLabelModifier)
         
-        
-        
-        addSubview(cityLabel)
-        
+
+        [cityLabel, descriptionLabel].forEach(addSubview)
+        print(subviews)
+
     }
     
     

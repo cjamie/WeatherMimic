@@ -9,54 +9,60 @@
 import Foundation
 
 typealias Kelvin = Double
+private typealias UnitConversionClosure = (Double) -> (Double)
 
 //TODO: make some unit tests for this
 struct TemperatureManager{
     //will store the temperature internally as a Kelvin
-    let temperature: Kelvin
+    let tempKelvin: Kelvin
     
+    //Conversion Constants
     private enum Constants{
         static let kelvinZero = 273.15
         static let fahrenHeitModifier: Double = 9/5
         static let fahrenheitToKelvinConstant = 459.67
         static let fahrenheitToKelvinModifier: Double = 5/9
-
     }
     
-    //init
+    //Constructors
     
     init(kelvin: Kelvin){
-        self.temperature = kelvin
+        self.tempKelvin = kelvin
     }
     
+    //T(K) = T(°C) + 273.15
     init(celsius: Double){
-        let celsiusToKelvin: (Double) -> Kelvin = { $0 + Constants.kelvinZero }
+        let celsiusToKelvin: UnitConversionClosure = { $0 + Constants.kelvinZero }
         let kelvin = celsiusToKelvin(celsius)
         
         self.init(kelvin: kelvin)
     }
     
+    //T(K) = (T(°F) + 459.67)× 5/9
     init(fahrenheit: Double) {
-        let fahrenheitToKelvin: (Double) -> Kelvin = { ($0 + Constants.fahrenheitToKelvinConstant) * Constants.fahrenheitToKelvinModifier }
+        let fahrenheitToKelvin: UnitConversionClosure = { ($0 + Constants.fahrenheitToKelvinConstant) * Constants.fahrenheitToKelvinModifier }
         let kelvin = fahrenheitToKelvin(fahrenheit)
         
         self.init(kelvin: kelvin)
     }
 }
 
+//Utility functions
+
 extension TemperatureManager {
-    
+    // K = K
     var asKelvin: Double {
-        return temperature
+        return tempKelvin
     }
     
+    //°C = K - 273.15
     var asCelcius: Double {
-        return temperature - Constants.kelvinZero
+        return tempKelvin - Constants.kelvinZero
     }
     
-//    T(°F) = T(K) × 9/5 - 459.67
+    //T(°F) = T(K) × 9/5 - 459.67
     var asFahrenheit: Double {
-        return (temperature * Constants.fahrenHeitModifier) - Constants.fahrenheitToKelvinModifier
+        return (tempKelvin * Constants.fahrenHeitModifier) - Constants.fahrenheitToKelvinConstant
     }
 }
 

@@ -9,7 +9,13 @@
 import Foundation
 
 //this will convert your WeatherForecast type into a WeatherPresentationDescribing type
-struct WeatherPresentationAdapter {
+enum WeatherPresentationAdapter {
+    
+    static let convertForecastToWeatherPresentationModel: (WeatherForecast) -> (WeatherPresentationModel) = {
+        forecast in
+        return WeatherPresentationModel(stateName: forecast.city.name)
+    }
+    
     static func convert(forecast: WeatherForecast) -> WeatherPresentationModel {
         return WeatherPresentationModel(stateName: forecast.city.name)
     }
