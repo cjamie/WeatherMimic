@@ -1,5 +1,5 @@
 //
-//  WeatherPresentationHeadline.swift
+//  WeatherPresentationHeadlineCell.swift
 //  WeatherMimic
 //
 //  Created by Admin on 8/25/18.
@@ -17,20 +17,20 @@ protocol HeadlineDependency{
 
 final class WeatherPresentationHeadlineCell: UICollectionViewCell {
 
+    static let reuseIdentifier = "WeatherPresentationHeadlineCell"
     var dependency: HeadlineDependency?
-    
     
     //closures to help instantiate
     lazy var cityNameLabelModifer: LabelBuilder = {
         label in
         label.text = self.dependency?.cityName
-        label.font = UIFont.weatherMimicHeadlineCity
+        label.font = UIFont.from(nameSize: FontPresets.headlineCity)
     }
     
     lazy var weatherDescriptionLabelModifier: LabelBuilder = {
         label in
-        label.font = UIFont.weatherMimicHeadlineDescription
         label.text = self.dependency?.weatherDescription
+        label.font = UIFont.from(nameSize: FontPresets.headlineDescription)
     }
     
     
@@ -41,10 +41,9 @@ final class WeatherPresentationHeadlineCell: UICollectionViewCell {
         let cityLabel = UILabel.build(block: cityNameLabelModifer)
         let descriptionLabel = UILabel.build(block: weatherDescriptionLabelModifier)
         
-
         [cityLabel, descriptionLabel].forEach(addSubview)
+        
         print(subviews)
-
     }
     
     

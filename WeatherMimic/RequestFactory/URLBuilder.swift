@@ -68,6 +68,7 @@ extension URLBuilder: URLBuilding {
     }
     
     func build() -> URL? {
+        print("urlbuilder's url: \(urlComponents.url!)")
         return urlComponents.url
     }
 }

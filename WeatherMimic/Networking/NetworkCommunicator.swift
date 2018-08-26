@@ -9,33 +9,22 @@
 import Foundation
 import os.log
 
-typealias ResponseCode = Int
-
 //responsible for getting an auth token, and then calling getWeather with the token
 
 
-//Concret
+//Concrete implementation of fetchers (will use the defaults)
 //TODO: add all of the ~necessary~ implementations inside of extensions
-final class NetworkCommunicator: WeatherFetching {
-    let authTokenFetcher: AuthTokenFetching
+final class NetworkCommunicator: WeatherFetching, AuthTokenFetching {
     
-    init(authTokenFetcher: AuthTokenFetching) {
-        self.authTokenFetcher = authTokenFetcher
-        
-    }
-
-    func getWeatherData(completion: @escaping (FetchResult<WeatherForecast>) -> ()) {
-        authTokenFetcher.getAuthToken {
+    
+    //this will provide you with weather data
+    func getWeatherData(completion: @escaping WeatherForecastHandler) {
+        getAuthToken {
             [weak self] token in
             self?.getWeather(with: token, completion: { completion($0) })
-
-         }
+        }
     }
 }
 
-extension NetworkCommunicator{
-    convenience init() {
-        self.init(authTokenFetcher: AuthTokenFetcher())
-    }
-}
+
 

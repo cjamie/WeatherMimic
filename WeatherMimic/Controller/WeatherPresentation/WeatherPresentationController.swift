@@ -16,7 +16,7 @@ final class WeatherPresentationController: UIViewController {
     //should this be a protocol specifically suited for view controller?
     //note: we can use adapter pattern for this.
     
-    var weatherForecast: WeatherPresentationDescribing?
+    var dependency: WeatherPresentationDescribing?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +24,7 @@ final class WeatherPresentationController: UIViewController {
         view.backgroundColor = UIColor.blue
         print("weather presentation controller ")
         
+        registerCells()
         networkCall()
     }
     
@@ -37,7 +38,7 @@ final class WeatherPresentationController: UIViewController {
             case .success(let forecastInstance):
                 print(forecastInstance)
                 //we want to adapt this instance into a weatherPresentationDescribing type
-                self.weatherForecast = WeatherPresentationAdapter.convert(forecast: forecastInstance)
+                self.dependency = WeatherMimicAdapter.weatherForecastToWeatherPresentationModel(forecastInstance)
             }
         }
     }
@@ -46,6 +47,31 @@ final class WeatherPresentationController: UIViewController {
     private var populateViewClosure: (WeatherPresentationDescribing) -> () = {
         let a = $0
         let temp = $0.stateName
+    }
+    
+    lazy var cv: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        
+        let height: CGFloat = view.frame.height
+        let width: CGFloat = view.frame.width
+//        layout.itemSize = CGSize(width: width, height: height) // size for item at equivalent
+        
+//        layout.scrollDirection = .vertical
+        layout.sectionInset = .zero
+        layout.minimumLineSpacing = 0// horizontal spacing betweencells.
+        
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.delegate = self
+        cv.dataSource = self
+        cv.isPagingEnabled = true
+        
+        cv.register(WeatherPresentationHeadlineCell.self, forCellWithReuseIdentifier: WeatherPresentationHeadlineCell.reuseIdentifier)
+        
+        return cv
+    }()
+    
+    private func addSubviews() -> () {
+        view.addSubview(cv)
     }
 }
 

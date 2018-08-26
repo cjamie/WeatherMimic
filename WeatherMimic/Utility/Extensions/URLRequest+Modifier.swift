@@ -9,7 +9,7 @@
 import Foundation
 
 extension URLRequest {
-    //will take in cache policy, time interval, type of request, and
+    //will take in a modification closure to build a URLRequest instance
     static func build(_ modificationBlock: RequestModifier, url: URL) -> URLRequest {
         var baseRequest = URLRequest(url: url)
         modificationBlock(&baseRequest)

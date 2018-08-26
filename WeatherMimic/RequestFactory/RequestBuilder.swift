@@ -26,14 +26,13 @@ typealias RequestModifier = (inout URLRequest) -> ()
 final class RequestFactory {
     //this was made to be a singleton with a private constructor
     public static let shared = RequestFactory()
-    private let urlBuilder = URLBuilder()
 
     //note: 1800 is 30 minutes = 30*60
     func makeWeatherRequest(url: URL,
                             cachePolicy: URLRequest.CachePolicy = .reloadRevalidatingCacheData,
                             timeoutInterval: TimeInterval = 1800,
                             headerFields: HeaderFields = [:],
-                            requestType: HTTPRequestType = .GET) -> URLRequest? {
+                            requestType: HTTPRequestType = .GET) -> URLRequest {
         
         
         let modificationBlock: RequestModifier = {
@@ -53,19 +52,19 @@ final class RequestFactory {
         let request = URLRequest.build(modificationBlock, url: url)
         
         privatePrint(request)
-        
         return request
     }
     
     private func privatePrint(_ request: URLRequest) {
         print("checking the request ")
+        
         let printables: [Any] = [
             request.allHTTPHeaderFields ?? [:],
             request.url ?? URL(string: "https://google.com")!,
             request.cachePolicy.rawValue,
             request.timeoutInterval,
             request.httpMethod ?? "POST"
-            ].compactMap{$0}
+        ].compactMap{$0}
         
         printables.forEach{ print($0) }
     }

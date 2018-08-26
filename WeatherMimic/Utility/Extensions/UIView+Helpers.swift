@@ -9,7 +9,7 @@
 import UIKit
 
 
-extension UIView{
+extension UIView {
     
     //MARK: anchoring helper function
     func anchor(top: NSLayoutYAxisAnchor?, leading: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, trailing: NSLayoutXAxisAnchor?, padding: UIEdgeInsets = .zero, size: CGSize = .zero) {
@@ -41,8 +41,6 @@ extension UIView{
     }
 }
 
-
-//Builder?
 
 extension UIView {
     static func build(block: LabelBuilder) -> UILabel {

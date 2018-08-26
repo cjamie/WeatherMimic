@@ -1,5 +1,5 @@
 //
-//  AuthTokenFetcher.swift
+//  AuthTokenFetching.swift
 //  WeatherMimic
 //
 //  Created by Admin on 8/22/18.
@@ -23,7 +23,6 @@ extension AuthTokenFetching{
         os_log("theres currently no implementation for getting auth token")
         let authToken = ""
         completion(authToken) //this is just a query parameter? not in the http fields?
-        
     }
 }
-class AuthTokenFetcher: AuthTokenFetching { }
+

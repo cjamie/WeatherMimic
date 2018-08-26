@@ -8,6 +8,8 @@
 
 import Foundation
 
+typealias ResponseCode = Int
+
 enum NetworkErrors: Error {
     case malformedURL
     case badResponseCode(ResponseCode)

@@ -10,11 +10,10 @@ import Foundation
 import os.log
 
 /*
- Fetcher would have a url, a urlsession, and 
- 
+ Fetcher would have a url, a urlsession, and dependency item for url
  */
 
-protocol Fetcher{
+protocol Fetcher {
     var urlDependency: URLConstructible { get }
     var url: URL { get }
     var fetchSession: URLSession { get }
@@ -22,12 +21,11 @@ protocol Fetcher{
 
 /*
  default urlDependency will be from NetworkConstants
- url will get clauclated ased on urlDependnecy
+ url will get clauclated based on urlDependnecy
  default session will be ephemeral
  */
 
-extension Fetcher{
-    
+extension Fetcher {
     var urlDependency: URLConstructible {
         //we will default to weather constants
         let dependency = URLConstructibleConcrete(host: NetworkConstants.Weather.host,

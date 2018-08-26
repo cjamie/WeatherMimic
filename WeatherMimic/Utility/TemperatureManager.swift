@@ -48,7 +48,6 @@ struct TemperatureManager{
 }
 
 //Utility functions
-
 extension TemperatureManager {
     // K = K
     var asKelvin: Double {
