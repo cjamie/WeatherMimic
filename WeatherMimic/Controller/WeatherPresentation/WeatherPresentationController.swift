@@ -11,35 +11,48 @@ import os
 
 typealias NetworkCallHandler = () -> ()
 
+protocol WeatherPresentationControllerProtocol: class {
+    func refreshUI()
+}
+
 final class WeatherPresentationController: UIViewController {
 
-    //should this be a protocol specifically suited for view controller?
-    //note: we can use adapter pattern for this.
-    
-    var dependency: WeatherPresentationDescribing?
+    //TODO: need to flesh out the protocol and data binding
+    var viewModel: WeatherPresentationViewModelProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         view.backgroundColor = UIColor.blue
-        print("weather presentation controller ")
         
-        registerCells()
-        networkCall()
+        addSubviews()
+        
+        cv.anchor(top: view.topAnchor,
+                  leading: view.leadingAnchor,
+                  bottom: view.bottomAnchor,
+                  trailing: view.trailingAnchor)
+        
+        print("weather presentation controller ")
+        self.viewModel = WeatherPresentationViewModel(self)
+        
+        print("testing getWeather controller ")
+        viewModel.getWeather(completion: viewModel.handleFetchResult!)
+//        networkCall()
+        
     }
     
     lazy var networkCall: NetworkCallHandler = {
         NetworkCommunicator().getWeatherData {
             fetchResult in
-            switch fetchResult{
+            switch fetchResult {
             case .failure(let err):
                 print(err.localizedDescription)
                 os_log("error received in network communicator", log: .default, type: .debug)
             case .success(let forecastInstance):
                 print(forecastInstance)
                 //we want to adapt this instance into a weatherPresentationDescribing type
-                self.dependency = WeatherMimicAdapter.weatherForecastToWeatherPresentationModel(forecastInstance)
-            }
+                let manager = WeatherMimicManager(forecast: forecastInstance)
+             }
         }
     }
     
@@ -50,6 +63,7 @@ final class WeatherPresentationController: UIViewController {
     }
     
     lazy var cv: UICollectionView = {
+        print("creating collectionview")
         let layout = UICollectionViewFlowLayout()
         
         let height: CGFloat = view.frame.height
@@ -66,7 +80,6 @@ final class WeatherPresentationController: UIViewController {
         cv.isPagingEnabled = true
         
         cv.register(WeatherPresentationHeadlineCell.self, forCellWithReuseIdentifier: WeatherPresentationHeadlineCell.reuseIdentifier)
-        
         return cv
     }()
     
@@ -74,4 +87,68 @@ final class WeatherPresentationController: UIViewController {
         view.addSubview(cv)
     }
 }
+
+extension WeatherPresentationController: UICollectionViewDelegate{
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("item at indexpath \(indexPath) selected")
+    }
+}
+
+extension WeatherPresentationController: UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.getNumberOfSections()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        var cell: UICollectionViewCell?
+        
+        //accessing via subscript.
+        guard let section = viewModel.getTableSection(byRow: indexPath.row) else {
+            fatalError()
+        }
+
+        switch section {
+        case .headline:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherPresentationHeadlineCell.reuseIdentifier, for: indexPath)
+        }
+        
+        configureCell(cell: cell, indexPath: indexPath)
+        return cell ?? UICollectionViewCell()
+    }
+    
+    
+    private func configureCell(cell: UICollectionViewCell?, indexPath: IndexPath) {
+        
+        guard let mySection = viewModel.getTableSection(byRow: indexPath.row) else {
+            return
+        }
+        switch mySection {
+        case .headline:
+            if let headlineCell = cell as? WeatherPresentationHeadlineCell, let viewModelManager = viewModel.manager {
+                print("setting the manager now")
+                headlineCell.viewModelManager = viewModelManager
+            }else{
+                print("failure to set the manager on the cell ")
+            }
+        }
+    }
+}
+
+extension WeatherPresentationController: WeatherPresentationControllerProtocol{
+    func refreshUI(){
+        print("refreshing UI")
+        cv.reloadData()
+    }
+}
+
+
+extension WeatherPresentationController: UICollectionViewDelegateFlowLayout{
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: view.frame.width, height: 300)
+    }
+}
+
+
 

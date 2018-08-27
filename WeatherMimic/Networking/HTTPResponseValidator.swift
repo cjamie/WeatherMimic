@@ -14,7 +14,7 @@ enum FetchResult<T:Decodable>{
 }
 
 /*
- this struct's responsibility is to comb through the data and return a validation response
+ this struct's responsibility is to comb through the (data, response, erro) tuple and return a FetchResult
  
  this will check for the following NetworkError cases:
         .noResponse,
@@ -29,8 +29,7 @@ enum FetchResult<T:Decodable>{
  the reason for this is that malformedURL gets handled before we reach here but this will handle everything else
  */
 
-//T will be our type, and U will be the error json
-
+//T will be our type, and U will be the struct error type that conforms decodable and error
 struct HTTPResponseValidator<T: Decodable, U: Decodable & Error> {
     private let validResponseCodes = (200..<300)
     private let sessionTuple: (data: Data?, response: URLResponse?, error: Error?)

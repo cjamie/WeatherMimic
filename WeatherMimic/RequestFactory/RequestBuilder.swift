@@ -56,8 +56,6 @@ final class RequestFactory {
     }
     
     private func privatePrint(_ request: URLRequest) {
-        print("checking the request ")
-        
         let printables: [Any] = [
             request.allHTTPHeaderFields ?? [:],
             request.url ?? URL(string: "https://google.com")!,

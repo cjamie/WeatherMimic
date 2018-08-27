@@ -26,7 +26,6 @@ protocol URLBuilding: Building where BuildingType == URL {
 
 //TODO: is this more of a facade?
 final class URLBuilder {
-    
     private let urlComponents = NSURLComponents()
     
     //MARK: Helpers
@@ -35,6 +34,11 @@ final class URLBuilder {
     private lazy var makeUrlQueryItem:(_ preferences: (String, String) ) -> URLQueryItem = {
         URLQueryItem(name: $0.0, value: $0.1)
     }
+
+    //this is valid alternative to the closure approach 
+//    private func makeUrlQueryItem(_ preferences: (String, String)) -> URLQueryItem {
+//        return URLQueryItem(name: preferences.0, value: preferences.1)
+//    }
 }
 
 extension URLBuilder: URLBuilding {
@@ -50,6 +54,7 @@ extension URLBuilder: URLBuilding {
         return self
     }
     
+    @discardableResult
     func set(path: String) -> Self {
         urlComponents.path = path
         return self

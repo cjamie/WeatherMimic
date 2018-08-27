@@ -9,10 +9,10 @@
 import Foundation
 
 /*
- id is your weather condition id
- main is a group of your weather parameters (Rain, Snow, Extreme, etc)
- description is the weather condition within your group
- icon a query item to get a weather icon
+ id             is your weather condition id
+ main           is a group of your weather parameters (Rain, Snow, Extreme, etc)
+ description    is the weather condition within your group
+ icon           is a query item to fetch a weather icon
  */
 
 struct WeatherParts: Codable {

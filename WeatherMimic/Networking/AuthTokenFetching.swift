@@ -14,10 +14,10 @@ import os.log
 typealias AuthCompletion = (AuthToken) -> ()
 
 protocol AuthTokenFetching {
-    func getAuthToken(_  completion: @escaping AuthCompletion)
+    func getAuthToken(_ completion: @escaping AuthCompletion)
 }
 
-extension AuthTokenFetching{
+extension AuthTokenFetching {
     //can leave this unimplemented for now and just call completion block
     func getAuthToken(_ completion: @escaping AuthCompletion) {
         os_log("theres currently no implementation for getting auth token")

@@ -37,7 +37,6 @@ extension NetworkErrors: LocalizedError{
         case .errorResponse(let x):
             descriptionString = NSLocalizedString("Server responded with an error json", comment: "errorResponse:\(x)")
         }
-        
         return descriptionString
     }
 }

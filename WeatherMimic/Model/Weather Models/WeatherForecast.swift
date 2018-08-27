@@ -9,10 +9,10 @@
 import Foundation
 
 /*
- cnt is number of days returned by api call
- list is your list of Weather days
- city is your city
- cod is your http response code in the json
+ cnt        is number of days returned by api call
+ list       is your list of Weather days
+ city       is your city
+ cod        is your http response code in the json
  */
 
 struct WeatherForecast: Codable {

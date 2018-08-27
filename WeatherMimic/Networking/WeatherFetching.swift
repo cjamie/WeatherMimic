@@ -14,17 +14,18 @@ typealias AuthToken = String
 typealias WeatherForecastHandler = (FetchResult<WeatherForecast>) -> ()
 
 //this is a call where we specifically use WeatherForecast as the generic type
-protocol WeatherFetching: class, Fetcher {
+protocol WeatherFetching: Fetcher {
     var weatherRequest: URLRequest { get }
     func getWeather(with: AuthToken, completion: @escaping WeatherForecastHandler)
+    func getWeather(completion: @escaping WeatherForecastHandler)
 }
 
 //it will have default functionality
-
 extension WeatherFetching {
     
-    //we can specify our fetch session here
+    //overriding the pre-exisiting session of .shared to ephemeral configuration
     var fetchSession: URLSession {
+        //ephemeral session configuration uses no persistent storage (for cache, cookies, credentials)
         return URLSession(configuration: .ephemeral)
     }
     
@@ -32,9 +33,12 @@ extension WeatherFetching {
         return RequestFactory.shared.makeWeatherRequest(url: url)
     }
     
-    func getWeather(with: AuthToken, completion: @escaping WeatherForecastHandler) {
-        //TODO: experiment with core data.
+    func getWeather(with authToken: AuthToken, completion: @escaping WeatherForecastHandler) {
         fetchSession.invalidateAndCancel()
+        
+        //this will account for the auth token.
+//        weatherRequest.addValue("", forHTTPHeaderField: "")
+
         let handler: (Data?, URLResponse?, Error?) -> () = {
             let tuple = ($0, $1, $2)
             let result = HTTPResponseValidator<WeatherForecast, WeatherError>(sessionTuple: tuple).validationResult
@@ -43,12 +47,21 @@ extension WeatherFetching {
         
         fetchSession.dataTask(with: weatherRequest, completionHandler: handler).resume()
     }
+    
+    func getWeather(completion: @escaping WeatherForecastHandler){
+        //TODO: specify the preferences first
+        fetchSession.invalidateAndCancel()
+        
+        let handler: (Data?, URLResponse?, Error?) -> () = {
+            let tuple = ($0, $1, $2)
+            let result = HTTPResponseValidator<WeatherForecast, WeatherError>(sessionTuple: tuple).validationResult
+            completion(result)
+        }
+        
+        fetchSession.dataTask(with: weatherRequest, completionHandler: handler).resume()
+    }
+
+    
+    
 }
-
-
-
-
-
-
-
 

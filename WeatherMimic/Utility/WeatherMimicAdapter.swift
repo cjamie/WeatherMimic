@@ -12,10 +12,6 @@ import Foundation
 //TODO: is this bad practice?
 struct WeatherMimicAdapter {
     static let weatherForecastToWeatherPresentationModel: (WeatherForecast) -> WeatherPresentationModel = {
-        WeatherPresentationModel(stateName: forecast.city.name)
+        WeatherPresentationModel(stateName: $0.city.name)
     }
 }
-
-
-
-

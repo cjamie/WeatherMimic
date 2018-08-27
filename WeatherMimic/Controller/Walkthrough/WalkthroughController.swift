@@ -9,7 +9,7 @@
 import UIKit
 
 //this will only be displayed on the first runthrough of the app
-class WalkthroughController: UIViewController {
+final class WalkthroughController: UIViewController {
     
 //    var viewModel: WalkThroughViewModel
     

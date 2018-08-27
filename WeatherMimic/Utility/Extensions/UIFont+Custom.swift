@@ -19,6 +19,6 @@ extension UIFont {
 }
 
 enum FontPresets {
-    static let headlineCity:NameSizeTuple = ("AvenirNext-Medium", 20)
-    static let headlineDescription:NameSizeTuple = ("AvenirNext-Medium", 16)
+    static let headlineCity: NameSizeTuple = ("AvenirNext-Medium", 24)
+    static let headlineDescription: NameSizeTuple = ("AvenirNext-Medium", 18)
 }

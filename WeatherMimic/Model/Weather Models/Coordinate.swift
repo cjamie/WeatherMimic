@@ -9,8 +9,8 @@
 import Foundation
 
 /*
- lat is your latitude
- lon is your longitude
+ lat        is your latitude
+ lon        is your longitude
  */
 
 struct Coordinate: Codable {

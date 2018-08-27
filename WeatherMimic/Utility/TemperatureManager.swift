@@ -12,9 +12,9 @@ typealias Kelvin = Double
 private typealias UnitConversionClosure = (Double) -> (Double)
 
 //TODO: make some unit tests for this
-struct TemperatureManager{
-    //will store the temperature internally as a Kelvin
-    let tempKelvin: Kelvin
+struct TemperatureManager {
+    //the temperature is stored internally as a Kelvin
+    private let tempKelvin: Kelvin
     
     //Conversion Constants
     private enum Constants{
@@ -25,7 +25,6 @@ struct TemperatureManager{
     }
     
     //Constructors
-    
     init(kelvin: Kelvin){
         self.tempKelvin = kelvin
     }

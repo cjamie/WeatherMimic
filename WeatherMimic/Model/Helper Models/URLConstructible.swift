@@ -17,13 +17,21 @@ protocol URLConstructible {
     var scheme: String { get }
     var path: String { get }
     var items: QueryPreferences { get }
-    
-    init(host: String, scheme: String, path: String, items: QueryPreferences)
 }
 
-struct URLConstructibleConcrete: URLConstructible {
-    let host: String
-    let scheme: String
-    let path: String
-    var items: QueryPreferences
+extension URLConstructible {
+    var host: String{
+        return NetworkConstants.Weather.host
+    }
+    var scheme: String {
+        return NetworkConstants.Weather.scheme
+    }
+    var path: String {
+        return NetworkConstants.Weather.path
+    }
+    var items: QueryPreferences {
+        return NetworkConstants.Weather.defaultItems
+    }
 }
+
+struct URLConstructibleConcrete: URLConstructible { }

@@ -28,11 +28,7 @@ protocol Fetcher {
 extension Fetcher {
     var urlDependency: URLConstructible {
         //we will default to weather constants
-        let dependency = URLConstructibleConcrete(host: NetworkConstants.Weather.host,
-                                                  scheme: NetworkConstants.Weather.scheme,
-                                                  path: NetworkConstants.Weather.path,
-                                                  items: NetworkConstants.Weather.defaultItems)
-        return dependency
+        return URLConstructibleConcrete()
     }
     
     var url: URL {
@@ -48,8 +44,8 @@ extension Fetcher {
         return url
     }
     
-    //default fetch session will be ephemeral type 
-    var fetchSession: URLSession{
-        return URLSession(configuration: .ephemeral)
+    //default weathersession will be ephemeral type. it will overwrite fetcher session
+    var fetchSession: URLSession {
+        return URLSession.shared
     }
 }
