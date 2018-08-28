@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import os.log
 
 typealias LabelBuilder = (UILabel) -> ()
 
@@ -14,25 +15,45 @@ final class WeatherPresentationHeadlineCell: UICollectionViewCell {
     
     static let reuseIdentifier = "WeatherPresentationHeadlineCell"
     
-    var viewModelManager: HeadlineDescribing? {
-        didSet {
-            guard let viewModelManager = viewModelManager else {
-                return
+    //TODO: need to build the viewmodel from here.
+    //TODO: pass in a a boxed manager in here instead. 
+//    var viewModelManager: HeadlineDescribing? {
+//        didSet {
+//            guard let viewModelManager = viewModelManager else {
+//                return
+//            }
+//            cityLabel.text = viewModelManager.cityName
+//            descriptionLabel.text = viewModelManager.weatherDescription
+//        }
+//    }
+    
+    
+    var viewModelManager: Box<WeatherMimicManager?> = Box(nil){
+        didSet{
+            viewModelManager.bind {
+                [weak self] manager in
+                guard let strongSelf = self else {
+                    os_log("cell self is nil")
+                    return
+                }
+                print("bind closure is called")
+                let headlineAdapted: HeadlineDescribing? = manager
+                
+                DispatchQueue.main.async {
+                    self?.cityLabel.text = headlineAdapted?.cityName
+                    self?.descriptionLabel.text = headlineAdapted?.weatherDescription
+                }
             }
-            cityLabel.text = viewModelManager.cityName
-            descriptionLabel.text = viewModelManager.weatherDescription
         }
     }
     
     lazy var cityLabel: UILabel = {
-        UILabel.build2(block: LabelPresets.cityNameLabelModifer)
-        
-//        UILabel.build(block: LabelPresets.cityNameLabelModifer)
+        UIView.build(block: LabelPresets.cityNameLabelModifer)
     }()
     
     //TODO: these closures can be put into a presets struct    
     lazy var descriptionLabel: UILabel = {
-        UILabel.build{ LabelPresets.descriptionLabelModifier($0) }
+        UIView.build(block: LabelPresets.descriptionLabelModifier)
     }()
     
     override init(frame: CGRect) {
@@ -42,6 +63,21 @@ final class WeatherPresentationHeadlineCell: UICollectionViewCell {
         anchorSubviews()
         
         backgroundColor = UIColor.red
+        
+//        viewModelManager.bind {
+//            [weak self] manager in
+//            guard let strongSelf = self else {
+//                os_log("cell self is nil")
+//                return
+//            }            
+//            print("bind closure is called")
+//            let headlineAdapted: HeadlineDescribing? = manager
+//            
+//            DispatchQueue.main.async {
+//                self?.cityLabel.text = headlineAdapted?.cityName
+//                self?.descriptionLabel.text = headlineAdapted?.weatherDescription
+//            }
+//        }
     }
     
     var subviewsToAdd: [UIView] {
@@ -51,8 +87,15 @@ final class WeatherPresentationHeadlineCell: UICollectionViewCell {
     private func anchorSubviews() {
         let cityLabelPadding = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         
-        cityLabel.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: cityLabelPadding)
-        descriptionLabel.anchor(top: cityLabel.bottomAnchor, leading: cityLabel.leadingAnchor, trailing: cityLabel.trailingAnchor)
+        cityLabel.anchor(top: topAnchor,
+                         leading: leadingAnchor,
+                         bottom: nil,
+                         trailing: trailingAnchor,
+                         padding: cityLabelPadding)
+        descriptionLabel.anchor(top: cityLabel.bottomAnchor,
+                                leading: cityLabel.leadingAnchor,
+                                bottom: nil,
+                                trailing: cityLabel.trailingAnchor)
 
     }
     

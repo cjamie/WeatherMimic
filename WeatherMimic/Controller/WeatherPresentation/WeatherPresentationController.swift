@@ -46,7 +46,7 @@ final class WeatherPresentationController: UIViewController {
         
         let height: CGFloat = view.frame.height
         let width: CGFloat = view.frame.width
-//        layout.itemSize = CGSize(width: width, height: height) // size for item at equivalent
+//        layout.itemSize = CGSize(width: width, height: height) // this will set the item size fo reach cel.
         
         layout.scrollDirection = .vertical
         layout.sectionInset = .zero
@@ -97,20 +97,20 @@ extension WeatherPresentationController: UICollectionViewDataSource{
     
     private func configureCell(cell: UICollectionViewCell?, indexPath: IndexPath) {
         
-        guard let mySection = viewModel.getTableSection(byRow: indexPath.row) else {
-            return
-        }
+        guard let mySection = viewModel.getTableSection(byRow: indexPath.row) else { return }
         
         switch mySection {
         case .headline:
             if let headlineCell = cell as? WeatherPresentationHeadlineCell {
                 print("setting the manager now")
-                headlineCell.viewModelManager = viewModel.tempManager.value
+                headlineCell.viewModelManager = viewModel.tempManager
             }
         }
+        
     }
 }
 
+//TODO: update individual cells on a need based basis.
 extension WeatherPresentationController: WeatherPresentationControllerProtocol{
     func refreshUI(){
         print("refreshing UI")
@@ -122,7 +122,8 @@ extension WeatherPresentationController: WeatherPresentationControllerProtocol{
 extension WeatherPresentationController: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
+        //TODO: dynamically calculate the height.
+
         return CGSize(width: view.frame.width, height: 300)
     }
 }

@@ -15,7 +15,7 @@ enum PresentationCells {
 protocol WeatherPresentationViewModelProtocol: class, WeatherFetching {
     var manager: WeatherMimicManager? { get set } //TODO: put this inside of a box.
     
-    var tempManager: Box<WeatherMimicManager?> { get }
+    var tempManager: Box<WeatherMimicManager?> { get set}
     
     var delegate: WeatherPresentationControllerProtocol? { get set }
     var handleFetchResult: WeatherForecastHandler? { get set }
@@ -28,6 +28,7 @@ protocol WeatherPresentationViewModelProtocol: class, WeatherFetching {
 //this will be a class because we are maintaining the tableSections
 final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
     
+    //we want to be able to set the manager from inside here.
     var tempManager: Box<WeatherMimicManager?> = Box(nil)
     
     var delegate: WeatherPresentationControllerProtocol?
@@ -44,15 +45,18 @@ final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
         self.networkServices = NetworkCommunicator()
         
         
-        //we have an oportunity to pass inour didSet logic inside of here
-        tempManager.bind { _ in
-            DispatchQueue.main.async {
-                [weak self] in
-                self?.delegate?.refreshUI()
-            }
-        }
         
+        //we have an oportunity to pass in our didSet logic inside of here
+//        tempManager.bind { _ in
+//            DispatchQueue.main.async {
+//                [weak self] in
+//                print("refreshing the UI. ")
+//                self?.delegate?.refreshUI()
+//            }
+//        }
     }
+    
+    
     
     //Helper functions
 
@@ -85,20 +89,25 @@ final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
     lazy var handleFetchResult: WeatherForecastHandler? = {
         [weak self] fetchResult in
         print("handling the fetch result ")
+        
         switch fetchResult {
         case .failure(let err):
             //TODO: handle error cases in UI
             print(err.localizedDescription)
         case .success(let forecastInstance):
-            self?.manager = WeatherMimicManager(forecast: forecastInstance)
+            print("successful network call ")
+            let myManager = WeatherMimicManager(forecast: forecastInstance)
+            self?.tempManager = Box(myManager)
             
-            self?.tempManager.value = WeatherMimicManager(forecast: forecastInstance)
-            guard let good = self?.manager else {
-                print("it is still nil")
-                return
-            }
-            print("setting the manager \(good) \(good.cityName) ")
-//            print(forecastInstance) //this is valid.
+            print("setting the manager  \(myManager.cityName) ")
+            
+                //this might be responsibility of the cell
+                self?.tempManager.bind { _ in
+                    DispatchQueue.main.async {
+                        [weak self] in
+                        self?.delegate?.refreshUI()
+                    }
+                }
         }
     }
 }
