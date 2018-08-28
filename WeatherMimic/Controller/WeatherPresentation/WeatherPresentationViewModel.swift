@@ -13,16 +13,14 @@ enum PresentationCells {
 }
 
 protocol WeatherPresentationViewModelProtocol: class, WeatherFetching {
-    var manager: WeatherMimicManager? { get set }
+    var manager: WeatherMimicManager? { get set } //TODO: put this inside of a box.
     var delegate: WeatherPresentationControllerProtocol? { get set }
     var handleFetchResult: WeatherForecastHandler? { get set }
 
     func getNumberOfSections() -> Int
     func getTableSection(byRow row: Int) -> PresentationCells?
-    func changeTableSections(to newSection: [PresentationCells]?)
+    func changeTableSections(to newSections: [PresentationCells]?)
 }
-
-
 
 //this will be a class because we are maintaining the tableSections
 final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
@@ -36,6 +34,8 @@ final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
         
         let initialSections: [PresentationCells] = [.headline]
         tableSections = Box(initialSections)
+        
+        tableSections.bind{ print("this was updated to \($0)") }
         self.networkServices = NetworkCommunicator()
     }
     
@@ -55,12 +55,7 @@ final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
     
     //this will be instantiated when service returns a response.
     var manager: WeatherMimicManager? {
-        didSet{
-            print("managerDidSet")
-            guard let _ = manager else{
-                print("manager didSet is nil")
-                return
-            }
+        didSet {
             DispatchQueue.main.async {
                 [weak self] in
                 self?.delegate?.refreshUI()

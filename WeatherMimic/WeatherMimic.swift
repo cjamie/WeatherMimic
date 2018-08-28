@@ -50,7 +50,10 @@ extension WeatherMimic {
      - returns: The localized string or the key if it was not found within .strings file.
      */
     static public func localizedString(for key: String, localizationHint: String = "") -> String {
-        let localized = NSLocalizedString(key, tableName: WeatherMimic.stringsFileName, bundle: WeatherMimic.bundle(), value: key, comment: localizationHint)
+        let localized = NSLocalizedString(key, tableName: WeatherMimic.stringsFileName,
+                                          bundle: WeatherMimic.bundle(),
+                                          value: kexy,
+                                          comment: localizationHint)
         // If not found, string will be equal to key
         if localized.isEmpty || localized == key {
             os_log("Could not localize string with key \"%@\" and hint \"%@\"", log: WeatherMimic.l14n_logger, type: .debug, key, localizationHint)

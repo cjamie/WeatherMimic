@@ -37,29 +37,7 @@ final class WeatherPresentationController: UIViewController {
         
         print("testing getWeather controller ")
         viewModel.getWeather(completion: viewModel.handleFetchResult!)
-//        networkCall()
         
-    }
-    
-    lazy var networkCall: NetworkCallHandler = {
-        NetworkCommunicator().getWeatherData {
-            fetchResult in
-            switch fetchResult {
-            case .failure(let err):
-                print(err.localizedDescription)
-                os_log("error received in network communicator", log: .default, type: .debug)
-            case .success(let forecastInstance):
-                print(forecastInstance)
-                //we want to adapt this instance into a weatherPresentationDescribing type
-                let manager = WeatherMimicManager(forecast: forecastInstance)
-             }
-        }
-    }
-    
-    //populate your controller here.
-    private var populateViewClosure: (WeatherPresentationDescribing) -> () = {
-        let a = $0
-        let temp = $0.stateName
     }
     
     lazy var cv: UICollectionView = {
@@ -70,7 +48,7 @@ final class WeatherPresentationController: UIViewController {
         let width: CGFloat = view.frame.width
 //        layout.itemSize = CGSize(width: width, height: height) // size for item at equivalent
         
-//        layout.scrollDirection = .vertical
+        layout.scrollDirection = .vertical
         layout.sectionInset = .zero
         layout.minimumLineSpacing = 0// horizontal spacing betweencells.
         
@@ -127,8 +105,6 @@ extension WeatherPresentationController: UICollectionViewDataSource{
             if let headlineCell = cell as? WeatherPresentationHeadlineCell, let viewModelManager = viewModel.manager {
                 print("setting the manager now")
                 headlineCell.viewModelManager = viewModelManager
-            }else{
-                print("failure to set the manager on the cell ")
             }
         }
     }

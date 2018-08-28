@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum FetchResult<T:Decodable>{
+enum FetchResult<T:Decodable> {
     case success(T) //this will a deserialized instance if successful
     case failure(Error) //this will return an error you may log
 }

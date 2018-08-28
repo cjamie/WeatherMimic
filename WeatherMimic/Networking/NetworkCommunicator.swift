@@ -15,7 +15,7 @@ final class NetworkCommunicator: WeatherFetching, AuthTokenFetching {
     func getWeatherData(completion: @escaping WeatherForecastHandler) {
         getAuthToken {
             [weak self] token in
-            self?.getWeather(with: token, completion: { completion($0) })
+            self?.getWeatherData(completion: completion)
         }
     }
 }

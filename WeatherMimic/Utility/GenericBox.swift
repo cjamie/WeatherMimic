@@ -14,20 +14,20 @@ import Foundation
 class Box<T> {
     typealias BoxClosure = (T) -> ()
     
-    var closure: BoxClosure?
+    var closure: BoxClosure? //the closure we execute whenever the value has been changed
     
     var value: T { //the value we are observing
-        didSet{
+        didSet {
             closure?(value)
         }
     }
-    
-    func bind(closure: BoxClosure?){
+
+    func bind(closure: BoxClosure?) {
         self.closure = closure
         closure?(value)
     }
     
-    init(_ value: T){
+    init(_ value: T) {
         self.value = value
     }
 }

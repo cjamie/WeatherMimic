@@ -37,7 +37,7 @@ extension WeatherFetching {
         fetchSession.invalidateAndCancel()
         
         //this will account for the auth token.
-//        weatherRequest.addValue("", forHTTPHeaderField: "")
+//        weatherRequest.addValue(authToken, forHTTPHeaderField: "")
 
         let handler: (Data?, URLResponse?, Error?) -> () = {
             let tuple = ($0, $1, $2)
@@ -48,7 +48,7 @@ extension WeatherFetching {
         fetchSession.dataTask(with: weatherRequest, completionHandler: handler).resume()
     }
     
-    func getWeather(completion: @escaping WeatherForecastHandler){
+    func getWeather(completion: @escaping WeatherForecastHandler) {
         //TODO: specify the preferences first
         fetchSession.invalidateAndCancel()
         

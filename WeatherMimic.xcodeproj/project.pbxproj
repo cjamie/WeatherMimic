@@ -10,6 +10,7 @@
 		8405B2922134677800A21D08 /* GenericBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8405B2912134677800A21D08 /* GenericBox.swift */; };
 		8405B2972134853D00A21D08 /* HeadlineDescribing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8405B2962134853D00A21D08 /* HeadlineDescribing.swift */; };
 		8405B2992134BE2500A21D08 /* LabelPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8405B2982134BE2400A21D08 /* LabelPresets.swift */; };
+		8405B29C2134C67800A21D08 /* FontPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8405B29B2134C67800A21D08 /* FontPresets.swift */; };
 		84CE6E4F212C982F00D2E4A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CE6E4E212C982F00D2E4A7 /* AppDelegate.swift */; };
 		84CE6E51212C982F00D2E4A7 /* WeatherPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CE6E50212C982F00D2E4A7 /* WeatherPresentationController.swift */; };
 		84CE6E54212C982F00D2E4A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84CE6E52212C982F00D2E4A7 /* Main.storyboard */; };
@@ -54,6 +55,7 @@
 		8405B2912134677800A21D08 /* GenericBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericBox.swift; sourceTree = "<group>"; };
 		8405B2962134853D00A21D08 /* HeadlineDescribing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineDescribing.swift; sourceTree = "<group>"; };
 		8405B2982134BE2400A21D08 /* LabelPresets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelPresets.swift; sourceTree = "<group>"; };
+		8405B29B2134C67800A21D08 /* FontPresets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontPresets.swift; sourceTree = "<group>"; };
 		84CE6E4B212C982F00D2E4A7 /* WeatherMimic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherMimic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84CE6E4E212C982F00D2E4A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84CE6E50212C982F00D2E4A7 /* WeatherPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPresentationController.swift; sourceTree = "<group>"; };
@@ -114,6 +116,15 @@
 				8405B2962134853D00A21D08 /* HeadlineDescribing.swift */,
 			);
 			path = WeatherPresentation;
+			sourceTree = "<group>";
+		};
+		8405B29A2134C64E00A21D08 /* Presets */ = {
+			isa = PBXGroup;
+			children = (
+				8405B2982134BE2400A21D08 /* LabelPresets.swift */,
+				8405B29B2134C67800A21D08 /* FontPresets.swift */,
+			);
+			path = Presets;
 			sourceTree = "<group>";
 		};
 		84CE6E42212C982F00D2E4A7 = {
@@ -182,12 +193,12 @@
 		84CE6E64212C986900D2E4A7 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				8405B29A2134C64E00A21D08 /* Presets */,
 				84CE6E4E212C982F00D2E4A7 /* AppDelegate.swift */,
 				84CE6E65212C987C00D2E4A7 /* Extensions */,
 				84CE6EA12130CE7700D2E4A7 /* WeatherMimicAdapter.swift */,
 				84CE6EAE2131EDFF00D2E4A7 /* TemperatureManager.swift */,
 				8405B2912134677800A21D08 /* GenericBox.swift */,
-				8405B2982134BE2400A21D08 /* LabelPresets.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -376,6 +387,7 @@
 				84CE6EB521336A8100D2E4A7 /* WeatherMimicManager.swift in Sources */,
 				84CE6E51212C982F00D2E4A7 /* WeatherPresentationController.swift in Sources */,
 				84CE6E8A212E33FD00D2E4A7 /* WeatherForecast.swift in Sources */,
+				8405B29C2134C67800A21D08 /* FontPresets.swift in Sources */,
 				84CE6E81212E238C00D2E4A7 /* AuthTokenFetching.swift in Sources */,
 				84CE6E7B212CB1F300D2E4A7 /* URLConstructible.swift in Sources */,
 				84CE6EA42130D59500D2E4A7 /* WeatherMimic.swift in Sources */,

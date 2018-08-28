@@ -13,18 +13,6 @@ protocol WeatherPresentationDescribing {
     var stateName: String { get }
 }
 
-
-
 struct WeatherPresentationModel: WeatherPresentationDescribing {
-    
     var stateName: String
-    
-    //Adapter pattern
 }
-
-
-
-// an adapter will be made to adapt the structure to our desired type.
-//
-
-

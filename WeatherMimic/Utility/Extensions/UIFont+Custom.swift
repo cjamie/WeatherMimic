@@ -8,17 +8,11 @@
 
 import UIKit
 
-typealias NameSizeTuple = (name: String, size: CGFloat)
-
 extension UIFont {
     private static let avenirNext = "AvenirNext-Medium"
     
     static func from(nameSize tuple: NameSizeTuple) -> UIFont {
-        return UIFont(name: tuple.name, size: tuple.size) ?? UIFont.systemFont(ofSize: tuple.size)
+        return self.init(name: tuple.name, size: tuple.size) ?? systemFont(ofSize: tuple.size)
     }
 }
 
-enum FontPresets {
-    static let headlineCity: NameSizeTuple = ("AvenirNext-Medium", 24)
-    static let headlineDescription: NameSizeTuple = ("AvenirNext-Medium", 18)
-}
