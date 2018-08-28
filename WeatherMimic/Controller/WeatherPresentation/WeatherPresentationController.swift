@@ -61,7 +61,7 @@ final class WeatherPresentationController: UIViewController {
         return cv
     }()
     
-    private func addSubviews() -> () {
+    private func addSubviews() {
         view.addSubview(cv)
     }
 }
@@ -74,7 +74,7 @@ extension WeatherPresentationController: UICollectionViewDelegate{
 
 extension WeatherPresentationController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.getNumberOfSections()
+        return viewModel.numberOfSections
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -100,11 +100,12 @@ extension WeatherPresentationController: UICollectionViewDataSource{
         guard let mySection = viewModel.getTableSection(byRow: indexPath.row) else {
             return
         }
+        
         switch mySection {
         case .headline:
-            if let headlineCell = cell as? WeatherPresentationHeadlineCell, let viewModelManager = viewModel.manager {
+            if let headlineCell = cell as? WeatherPresentationHeadlineCell {
                 print("setting the manager now")
-                headlineCell.viewModelManager = viewModelManager
+                headlineCell.viewModelManager = viewModel.tempManager.value
             }
         }
     }

@@ -25,12 +25,14 @@ final class WeatherPresentationHeadlineCell: UICollectionViewCell {
     }
     
     lazy var cityLabel: UILabel = {
-        return UILabel.build(block: LabelPresets.cityNameLabelModifer)
+        UILabel.build2(block: LabelPresets.cityNameLabelModifer)
+        
+//        UILabel.build(block: LabelPresets.cityNameLabelModifer)
     }()
     
     //TODO: these closures can be put into a presets struct    
     lazy var descriptionLabel: UILabel = {
-        return UILabel.build{ LabelPresets.descriptionLabelModifier($0) }
+        UILabel.build{ LabelPresets.descriptionLabelModifier($0) }
     }()
     
     override init(frame: CGRect) {
@@ -49,13 +51,12 @@ final class WeatherPresentationHeadlineCell: UICollectionViewCell {
     private func anchorSubviews() {
         let cityLabelPadding = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         
-        cityLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: cityLabelPadding)
-        descriptionLabel.anchor(top: cityLabel.bottomAnchor, leading: cityLabel.leadingAnchor, bottom: nil, trailing: cityLabel.trailingAnchor)
+        cityLabel.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: cityLabelPadding)
+        descriptionLabel.anchor(top: cityLabel.bottomAnchor, leading: cityLabel.leadingAnchor, trailing: cityLabel.trailingAnchor)
 
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }

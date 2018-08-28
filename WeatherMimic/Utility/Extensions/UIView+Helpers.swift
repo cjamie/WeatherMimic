@@ -12,7 +12,7 @@ import UIKit
 extension UIView {
     
     //MARK: anchoring helper function
-    func anchor(top: NSLayoutYAxisAnchor?, leading: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, trailing: NSLayoutXAxisAnchor?, padding: UIEdgeInsets = .zero, size: CGSize = .zero) {
+    func anchor(top: NSLayoutYAxisAnchor? = nil, leading: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, trailing: NSLayoutXAxisAnchor? = nil, padding: UIEdgeInsets = .zero, size: CGSize = .zero) {
         translatesAutoresizingMaskIntoConstraints = false
         
         if let top = top {
@@ -47,6 +47,13 @@ extension UIView {
         let label = UILabel()
         block(label)
         return label
+    }
+    
+    //TODO: verify if this works or not
+    static func build2<T:UIView>(block: (T)->()) -> T{
+        let placeholder = T()
+        block(placeholder)
+        return placeholder
     }
 }
 

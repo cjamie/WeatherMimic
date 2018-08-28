@@ -14,16 +14,21 @@ enum PresentationCells {
 
 protocol WeatherPresentationViewModelProtocol: class, WeatherFetching {
     var manager: WeatherMimicManager? { get set } //TODO: put this inside of a box.
+    
+    var tempManager: Box<WeatherMimicManager?> { get }
+    
     var delegate: WeatherPresentationControllerProtocol? { get set }
     var handleFetchResult: WeatherForecastHandler? { get set }
-
-    func getNumberOfSections() -> Int
+    var numberOfSections: Int { get }
+    
     func getTableSection(byRow row: Int) -> PresentationCells?
     func changeTableSections(to newSections: [PresentationCells]?)
 }
 
 //this will be a class because we are maintaining the tableSections
 final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
+    
+    var tempManager: Box<WeatherMimicManager?> = Box(nil)
     
     var delegate: WeatherPresentationControllerProtocol?
     var tableSections: Box<[PresentationCells]?> //we don't want caller to have direct access to this.
@@ -37,23 +42,28 @@ final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
         
         tableSections.bind{ print("this was updated to \($0)") }
         self.networkServices = NetworkCommunicator()
+        
+        
+        //we have an oportunity to pass inour didSet logic inside of here
+        tempManager.bind { _ in
+            DispatchQueue.main.async {
+                [weak self] in
+                self?.delegate?.refreshUI()
+            }
+        }
+        
     }
-    
     
     //Helper functions
-    private func createManager(with forecastInstance: WeatherForecast) {
-        self.manager = WeatherMimicManager(forecast: forecastInstance)
-    }
 
     //MARK: WeatherPresentationViewModelProtocol
 
-    func getNumberOfSections() -> Int {
-        let retValue = tableSections.value?.count ?? 0
-        print("retValue \(retValue)")
-        return retValue
+    var numberOfSections: Int {
+        return tableSections.value?.count ?? 0
     }
     
     //this will be instantiated when service returns a response.
+    //TODO: should this be binded to update a specific element?
     var manager: WeatherMimicManager? {
         didSet {
             DispatchQueue.main.async {
@@ -67,7 +77,7 @@ final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
         return tableSections.value?[row]
     }
 
-    func changeTableSections(to newSections: [PresentationCells]?){
+    func changeTableSections(to newSections: [PresentationCells]?) {
         self.tableSections.value = newSections
     }
 
@@ -81,6 +91,8 @@ final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
             print(err.localizedDescription)
         case .success(let forecastInstance):
             self?.manager = WeatherMimicManager(forecast: forecastInstance)
+            
+            self?.tempManager.value = WeatherMimicManager(forecast: forecastInstance)
             guard let good = self?.manager else {
                 print("it is still nil")
                 return
