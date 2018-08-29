@@ -61,7 +61,7 @@ final class RequestFactory {
             request.cachePolicy.rawValue,
             request.timeoutInterval,
             request.httpMethod ?? "POST"
-        ].compactMap{$0}
+        ].compactMap{ $0 }
         
         printables.forEach{ print($0) }
     }

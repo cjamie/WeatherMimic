@@ -1,5 +1,5 @@
 //
-//  Unit.swift
+//  WeatherUnit.swift
 //  WeatherMimic
 //
 //  Created by Admin on 8/28/18.
@@ -8,16 +8,29 @@
 
 import Foundation
 
-enum Unit {
+enum WeatherUnit {
     case imperial //
     case metric
     case websiteDefault
 }
 
+extension WeatherUnit{
+    init(string: String) {
+        switch string {
+        case "imperial":
+            self = .imperial
+        case "metric":
+            self = .metric
+        default:
+            self = .websiteDefault
+        }
+    }
+}
+
 
 //need a way to handle conversions between
 //TODO: this will handle manage the unit conversion types
-extension Unit {
+extension WeatherUnit {
     //Wind
     var windType: String {
         switch self {

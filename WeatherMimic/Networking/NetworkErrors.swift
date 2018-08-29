@@ -19,7 +19,7 @@ enum NetworkErrors: Error {
     case errorResponse(Error & Decodable)
 }
 
-extension NetworkErrors: LocalizedError{
+extension NetworkErrors: LocalizedError {
     public var errorDescription: String? {
         let descriptionString: String
         

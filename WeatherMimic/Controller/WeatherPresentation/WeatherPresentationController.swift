@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import os
+import os.log
 
 protocol WeatherPresentationControllerProtocol: class {
     func refreshUI()
@@ -22,8 +22,7 @@ final class WeatherPresentationController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         view.backgroundColor = UIColor.blue
-        
-        addSubviews()
+        view.addSubview(cv)
         
         cv.anchor(top: view.topAnchor,
                   leading: view.leadingAnchor,
@@ -40,9 +39,9 @@ final class WeatherPresentationController: UIViewController {
     //TODO: a lot of this can be abstracted away into presets
     lazy var cv: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        
-        let height: CGFloat = view.frame.height
-        let width: CGFloat = view.frame.width
+       
+        //        let height: CGFloat = view.frame.height /
+        //        let width: CGFloat = view.frame.width
         //        layout.itemSize = CGSize(width: width, height: height) // this will set the item size fo reach cell.
         
         layout.scrollDirection = .vertical
@@ -55,12 +54,12 @@ final class WeatherPresentationController: UIViewController {
         cv.isPagingEnabled = true
         
         cv.register(WeatherPresentationHeadlineCell.self, forCellWithReuseIdentifier: WeatherPresentationHeadlineCell.reuseIdentifier)
+        cv.register(WeatherPresentationTemperatureCell.self, forCellWithReuseIdentifier: WeatherPresentationTemperatureCell.reuseIdentifier)
+        cv.register(WeatherPresentationDayInfoCell.nib, forCellWithReuseIdentifier: WeatherPresentationDayInfoCell.reuseIdentifier)
+        
         return cv
     }()
     
-    private func addSubviews() {
-        view.addSubview(cv)
-    }
 }
 
 extension WeatherPresentationController: UICollectionViewDelegate {
@@ -85,6 +84,10 @@ extension WeatherPresentationController: UICollectionViewDataSource {
         switch section {
         case .headline:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherPresentationHeadlineCell.reuseIdentifier, for: indexPath)
+        case .temperature:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherPresentationTemperatureCell.reuseIdentifier, for: indexPath)
+        case .dayInfo:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherPresentationDayInfoCell.reuseIdentifier, for: indexPath)
         }
         
         configureCell(cell: cell, indexPath: indexPath)
@@ -101,8 +104,15 @@ extension WeatherPresentationController: UICollectionViewDataSource {
             if let headlineCell = cell as? WeatherPresentationHeadlineCell {
                 headlineCell.boxedManager = viewModel.manager
             }
+        case .temperature:
+            if let temperatureCell = cell as? WeatherPresentationTemperatureCell {
+                temperatureCell.boxedManager = viewModel.manager
+            }
+        case .dayInfo:
+            if let dayInfoCell = cell as? WeatherPresentationDayInfoCell {
+                dayInfoCell.boxedManager = viewModel.manager
+            }
         }
-        
     }
 }
 
@@ -118,8 +128,31 @@ extension WeatherPresentationController: WeatherPresentationControllerProtocol{
 extension WeatherPresentationController: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        //TODO: dynamically calculate the height.
-        return CGSize(width: view.frame.width, height: 300)
+    
+        guard let mySection = viewModel.getTableSection(byRow: indexPath.row) else {
+            os_log("section is still nil so can't calculate height")
+            return .zero
+        }
+        
+        let height: CGFloat
+        switch mySection {
+        case .headline:
+            let headlineCell = WeatherPresentationHeadlineCell()
+            headlineCell.boxedManager = viewModel.manager
+            height = headlineCell.viewHeight
+        case .temperature:
+            //TODO: dynamically size
+            height = 100 //hardcoding for now.
+        case .dayInfo:
+            if let dayInfoCell = WeatherPresentationDayInfoCell.fromNib{
+                dayInfoCell.boxedManager = viewModel.manager
+                height = dayInfoCell.viewHeight
+            } else {
+                height = 0
+            }
+        }
+        
+        return CGSize(width: view.frame.width, height: height)
     }
 }
 

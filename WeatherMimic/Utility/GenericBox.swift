@@ -10,7 +10,6 @@ import Foundation
 
 
 //this class will house a generic type, and execute an action whenever the value is set. (this is used for mvvm)
-
 class Box<T> {
     typealias BoxClosure = (T) -> ()
     

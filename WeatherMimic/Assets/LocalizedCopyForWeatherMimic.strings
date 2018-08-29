@@ -6,7 +6,11 @@
   Copyright © 2018 Admin. All rights reserved.
 */
 
-
-//TODO: add in localized strings here
 //different strings for different temperatures?
 
+
+//WeatherPresentation
+//TODO: add in the correct character
+"com.WeatherMimic.WeatherPresentation.temperature" = "%@°C";
+//"com.WeatherMimic.WeatherPresentation.today" = "TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY";
+"com.WeatherMimic.WeatherPresentation.today" = "TODAY";

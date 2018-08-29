@@ -10,6 +10,8 @@ import Foundation
 
 enum PresentationCells {
     case headline
+    case temperature
+    case dayInfo
 }
 
 protocol WeatherPresentationViewModelProtocol: class, WeatherFetching {
@@ -36,7 +38,7 @@ final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
     init(_ controller: WeatherPresentationControllerProtocol) {
         self.delegate = controller
         
-        let initialSections: [PresentationCells] = [.headline]
+        let initialSections: [PresentationCells] = [.headline, .temperature, .dayInfo]
         tableSections = Box(initialSections)
         
         tableSections.bind {
@@ -65,11 +67,11 @@ final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
     // Once you receive a successful response, then you can create your Manager instance
     lazy var handleFetchResult: WeatherForecastHandler? = {
         [weak self] fetchResult in
-        print("handling the fetch result ")
-        
         switch fetchResult {
         case .failure(let err):
             //TODO: handle error cases in UI
+            print("network failure")
+            //TODO: create a custom os_log for this
             print(err.localizedDescription)
         case .success(let forecastInstance):
             print("handling successful network call!")
@@ -77,6 +79,7 @@ final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
             self?.manager = Box(myManager)
             
             //this might be responsibility of the cell
+                        
             self?.manager.bind { _ in
                 DispatchQueue.main.async {
                     [weak self] in

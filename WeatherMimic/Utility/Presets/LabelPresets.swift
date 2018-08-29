@@ -9,6 +9,8 @@
 import UIKit
 
 enum LabelPresets{
+    //MARK: Headline Cell
+    
     static let cityNameLabelModifer: LabelBuilder = {
         label in
         label.text = "{FPO: Temporary City Name}"
@@ -16,6 +18,7 @@ enum LabelPresets{
         label.numberOfLines = 0
         label.textColor = UIColor.white
         label.textAlignment = .center
+        label.lineBreakMode = .byWordWrapping
         
         label.backgroundColor = UIColor.blue
     }
@@ -25,8 +28,22 @@ enum LabelPresets{
         label.text = "{FPO: Temporary Description Name}"
         label.textColor = UIColor.white
         label.font = UIFont.from(nameSize: FontPresets.headlineDescription)
-        label.numberOfLines = 0
         label.textAlignment = .center
         label.backgroundColor = UIColor.darkGray
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+
+    }
+    
+    //MARK:
+    static let temperatureLabelModifier: LabelBuilder = {
+        label in
+        label.text = "{FPO: Temporary Tempature Name}"
+        label.textAlignment = .center
+        label.textColor = UIColor.white
+        label.font = UIFont.from(nameSize: FontPresets.temperatureLabel)
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+
     }
 }

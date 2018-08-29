@@ -13,7 +13,7 @@ import Foundation
 final class WeatherMimicManager {
     let forecast: WeatherForecast
     
-    init(forecast: WeatherForecast){
+    init(forecast: WeatherForecast) {
         self.forecast = forecast
     }
 }
@@ -30,12 +30,38 @@ extension WeatherMimicManager: HeadlineDescribing {
     }
 
     var weatherDescription: String {
-        return forecast.list[0].weather[0].description
+        return forecast.list[0].weather[0].description.capitalized
     }
 }
 
-extension WeatherMimicManager {
+extension WeatherMimicManager: TemperatureDescribing {
+    var temperature: String {
+        let myTemp = String(forecast.list[0].main.temp)
+        return String(format: WeatherMimic.localizedString(for: "com.WeatherMimic.WeatherPresentation.temperature"), myTemp)
+    }
     
+    var weatherUnit: WeatherUnit {
+        //TODO: make this an extension.
+        return UserDefaults.getWeatherUnit
+    }
 }
+
+
+extension WeatherMimicManager: DayInfoDescribing {
+    var weekDay: String {
+        return Date().string(forDateFormat: .weekDay)
+    }
+    var highTemp: String {
+        return String(forecast.list[0].main.temp_max)
+    }
+    var lowTemp: String {
+        return String(forecast.list[0].main.temp_min)
+    }
+}
+
+//extension WeatherMimic: HourlyForecastDescribing {
+//}
+
+
 
 

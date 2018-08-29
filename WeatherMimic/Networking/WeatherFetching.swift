@@ -16,7 +16,7 @@ typealias WeatherForecastHandler = (FetchResult<WeatherForecast>) -> ()
 //this is a call where we specifically use WeatherForecast as the generic type
 protocol WeatherFetching: Fetcher {
     var weatherRequest: URLRequest { get }
-    func getWeather(with: AuthToken, completion: @escaping WeatherForecastHandler)
+    func getWeather(with: AuthToken, completion: @escaping WeatherForecastHandler) //currently not used
     func getWeather(completion: @escaping WeatherForecastHandler)
 }
 
