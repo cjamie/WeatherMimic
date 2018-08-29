@@ -8,9 +8,7 @@
 
 import UIKit
 
-extension UIFont {
-    private static let avenirNext = "AvenirNext-Medium"
-    
+extension UIFont {    
     static func from(nameSize tuple: NameSizeTuple) -> UIFont {
         return self.init(name: tuple.name, size: tuple.size) ?? systemFont(ofSize: tuple.size)
     }

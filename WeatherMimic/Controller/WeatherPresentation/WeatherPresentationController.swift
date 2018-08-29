@@ -9,8 +9,6 @@
 import UIKit
 import os
 
-typealias NetworkCallHandler = () -> ()
-
 protocol WeatherPresentationControllerProtocol: class {
     func refreshUI()
 }
@@ -32,21 +30,20 @@ final class WeatherPresentationController: UIViewController {
                   bottom: view.bottomAnchor,
                   trailing: view.trailingAnchor)
         
-        print("weather presentation controller ")
         self.viewModel = WeatherPresentationViewModel(self)
         
-        print("testing getWeather controller ")
-        viewModel.getWeather(completion: viewModel.handleFetchResult!)
+        guard let viewModelClosure = viewModel.handleFetchResult else {return}
+        viewModel.getWeather(completion: viewModelClosure)
         
     }
     
+    //TODO: a lot of this can be abstracted away into presets
     lazy var cv: UICollectionView = {
-        print("creating collectionview")
         let layout = UICollectionViewFlowLayout()
         
         let height: CGFloat = view.frame.height
         let width: CGFloat = view.frame.width
-//        layout.itemSize = CGSize(width: width, height: height) // this will set the item size fo reach cel.
+        //        layout.itemSize = CGSize(width: width, height: height) // this will set the item size fo reach cell.
         
         layout.scrollDirection = .vertical
         layout.sectionInset = .zero
@@ -66,13 +63,13 @@ final class WeatherPresentationController: UIViewController {
     }
 }
 
-extension WeatherPresentationController: UICollectionViewDelegate{
+extension WeatherPresentationController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("item at indexpath \(indexPath) selected")
     }
 }
 
-extension WeatherPresentationController: UICollectionViewDataSource{
+extension WeatherPresentationController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.numberOfSections
     }
@@ -102,8 +99,7 @@ extension WeatherPresentationController: UICollectionViewDataSource{
         switch mySection {
         case .headline:
             if let headlineCell = cell as? WeatherPresentationHeadlineCell {
-                print("setting the manager now")
-                headlineCell.viewModelManager = viewModel.tempManager
+                headlineCell.boxedManager = viewModel.manager
             }
         }
         
@@ -123,7 +119,6 @@ extension WeatherPresentationController: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         //TODO: dynamically calculate the height.
-
         return CGSize(width: view.frame.width, height: 300)
     }
 }

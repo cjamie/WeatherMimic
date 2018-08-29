@@ -13,9 +13,7 @@ enum PresentationCells {
 }
 
 protocol WeatherPresentationViewModelProtocol: class, WeatherFetching {
-    var manager: WeatherMimicManager? { get set } //TODO: put this inside of a box.
-    
-    var tempManager: Box<WeatherMimicManager?> { get set}
+    var manager: Box<WeatherMimicManager?> { get set}
     
     var delegate: WeatherPresentationControllerProtocol? { get set }
     var handleFetchResult: WeatherForecastHandler? { get set }
@@ -29,11 +27,11 @@ protocol WeatherPresentationViewModelProtocol: class, WeatherFetching {
 final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
     
     //we want to be able to set the manager from inside here.
-    var tempManager: Box<WeatherMimicManager?> = Box(nil)
+    var manager: Box<WeatherMimicManager?> = Box(nil)
     
     var delegate: WeatherPresentationControllerProtocol?
     var tableSections: Box<[PresentationCells]?> //we don't want caller to have direct access to this.
-    let networkServices: NetworkCommunicator
+    let networkServices: NetworkCommunicator = NetworkCommunicator()
     
     init(_ controller: WeatherPresentationControllerProtocol) {
         self.delegate = controller
@@ -41,50 +39,29 @@ final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
         let initialSections: [PresentationCells] = [.headline]
         tableSections = Box(initialSections)
         
-        tableSections.bind{ print("this was updated to \($0)") }
-        self.networkServices = NetworkCommunicator()
-        
-        
-        
-        //we have an oportunity to pass in our didSet logic inside of here
-//        tempManager.bind { _ in
-//            DispatchQueue.main.async {
-//                [weak self] in
-//                print("refreshing the UI. ")
-//                self?.delegate?.refreshUI()
-//            }
-//        }
+        tableSections.bind {
+            print("this was updated to \($0)")
+        }
     }
     
     
     
     //Helper functions
-
+    
     //MARK: WeatherPresentationViewModelProtocol
-
+    
     var numberOfSections: Int {
         return tableSections.value?.count ?? 0
-    }
-    
-    //this will be instantiated when service returns a response.
-    //TODO: should this be binded to update a specific element?
-    var manager: WeatherMimicManager? {
-        didSet {
-            DispatchQueue.main.async {
-                [weak self] in
-                self?.delegate?.refreshUI()
-            }
-        }
     }
     
     func getTableSection(byRow row: Int) -> PresentationCells? {
         return tableSections.value?[row]
     }
-
+    
     func changeTableSections(to newSections: [PresentationCells]?) {
         self.tableSections.value = newSections
     }
-
+    
     // Once you receive a successful response, then you can create your Manager instance
     lazy var handleFetchResult: WeatherForecastHandler? = {
         [weak self] fetchResult in
@@ -95,19 +72,17 @@ final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
             //TODO: handle error cases in UI
             print(err.localizedDescription)
         case .success(let forecastInstance):
-            print("successful network call ")
+            print("handling successful network call!")
             let myManager = WeatherMimicManager(forecast: forecastInstance)
-            self?.tempManager = Box(myManager)
+            self?.manager = Box(myManager)
             
-            print("setting the manager  \(myManager.cityName) ")
-            
-                //this might be responsibility of the cell
-                self?.tempManager.bind { _ in
-                    DispatchQueue.main.async {
-                        [weak self] in
-                        self?.delegate?.refreshUI()
-                    }
+            //this might be responsibility of the cell
+            self?.manager.bind { _ in
+                DispatchQueue.main.async {
+                    [weak self] in
+                    self?.delegate?.refreshUI()
                 }
+            }
         }
     }
 }

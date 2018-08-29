@@ -49,17 +49,17 @@ struct TemperatureManager {
 //Utility functions
 extension TemperatureManager {
     // K = K
-    var asKelvin: Double {
+    public var asKelvin: Double {
         return tempKelvin
     }
     
     //°C = K - 273.15
-    var asCelcius: Double {
+    public var asCelcius: Double {
         return tempKelvin - Constants.kelvinZero
     }
     
     //T(°F) = T(K) × 9/5 - 459.67
-    var asFahrenheit: Double {
+    public var asFahrenheit: Double {
         return (tempKelvin * Constants.fahrenHeitModifier) - Constants.fahrenheitToKelvinConstant
     }
 }

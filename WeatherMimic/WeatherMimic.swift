@@ -31,16 +31,22 @@ public class WeatherMimic{
 
 extension WeatherMimic {
     
+    private enum Constants {
+        static let loggerCategory = "LocalizationIssues"
+     
+        static let loggerSubsystem = "MAC.WeatherMimic"
+        static let stringsFileName = "LocalizedCopyForWeatherMimic"
+    }
+    
     /**
      Logging subsystem and category for localization issues for use at os_log() calling sites.
      
      - Note: Currently the visibility / scope is set to `internal` so that elsewhere in WeatherMimic we
      can use this logger subsystem for localization and internationalization activity logging.
      */
-    internal static let l14n_logger = OSLog(subsystem: "MAC.WeatherMimic", category: "LocalizationIssues")
-
+    internal static let projectLogger = OSLog(subsystem: Constants.loggerSubsystem, category: Constants.loggerCategory)
     
-    private static let stringsFileName = "LocalizedCopyForWeatherMimic"
+//    private static let stringsFileName = "LocalizedCopyForWeatherMimic"
     
     /**
      Returns a localized string from the WeatherMimic primary .strings file.
@@ -49,14 +55,16 @@ extension WeatherMimic {
      - parameter localizationHint: Provide a contextual hint for translators
      - returns: The localized string or the key if it was not found within .strings file.
      */
-    static public func localizedString(for key: String, localizationHint: String = "") -> String {
-        let localized = NSLocalizedString(key, tableName: WeatherMimic.stringsFileName,
+    static public func localizedString(for key: String, localizationHint: String = String()) -> String {
+        let localized = NSLocalizedString(key,
+                                          tableName: Constants.stringsFileName,
                                           bundle: WeatherMimic.bundle(),
                                           value: key,
                                           comment: localizationHint)
+        
         // If not found, string will be equal to key
         if localized.isEmpty || localized == key {
-            os_log("Could not localize string with key \"%@\" and hint \"%@\"", log: WeatherMimic.l14n_logger, type: .debug, key, localizationHint)
+            os_log("Could not localize string with key \"%@\" and hint \"%@\"", log: WeatherMimic.projectLogger, type: .debug, key, localizationHint)
         }
         return localized
     }

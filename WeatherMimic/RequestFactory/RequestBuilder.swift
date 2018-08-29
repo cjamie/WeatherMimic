@@ -34,7 +34,6 @@ final class RequestFactory {
                             headerFields: HeaderFields = [:],
                             requestType: HTTPRequestType = .GET) -> URLRequest {
         
-        
         let modificationBlock: RequestModifier = {
             request in
             

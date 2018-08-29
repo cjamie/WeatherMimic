@@ -27,7 +27,6 @@ enum LabelPresets{
         label.font = UIFont.from(nameSize: FontPresets.headlineDescription)
         label.numberOfLines = 0
         label.textAlignment = .center
-                
         label.backgroundColor = UIColor.darkGray
     }
 }

@@ -13,14 +13,14 @@ import Foundation
 //this protocol defines list of dependencies that a url requires
 //URLConstructible
 protocol URLConstructible {
-    var host: String { get }
-    var scheme: String { get }
-    var path: String { get }
-    var items: QueryPreferences { get }
+    var host    : String { get }
+    var scheme  : String { get }
+    var path    : String { get }
+    var items   : QueryPreferences { get }
 }
 
 extension URLConstructible {
-    var host: String{
+    var host: String {
         return NetworkConstants.Weather.host
     }
     var scheme: String {
