@@ -29,8 +29,9 @@ enum NetworkConstants {
     enum WeatherIcon {
         static let scheme = "https"
         static let host = "openweathermap.org"
-        static let path = "/img/w/10d.png" //we want to attempt pattern matching with this.
-        
+        static let path = "/img/w/%@.png" //we want to attempt pattern matching with this.
+
+        static let defaultIconString = "10d"
         static let defaultItems: [String: String] = [:]
     }
 }

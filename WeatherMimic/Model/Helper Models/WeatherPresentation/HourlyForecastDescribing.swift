@@ -6,14 +6,23 @@
 //  Copyright © 2018 Admin. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 // this will power a collectionview
 protocol HourlyForecastDescribing {
-    var hourlyDatasource: [TemperatureIncrement] { get }
-    
+    var horizontalDataSource: [AccuWeatherUnit] { get }
+    var numberOfHorizontalCells: Int {get}
 }
 
-struct TemperatureIncrement{
-    
+extension HourlyForecastDescribing {
+    var numberOfHorizontalCells: Int {
+        return horizontalDataSource.count
+    }
+}
+
+//this will decribe the tri-hourly time
+protocol AccuWeatherUnit {
+    var hourlyTime: Date { get }
+    var iconString: String { get }
+    var degree: Kelvin { get }
 }

@@ -22,3 +22,5 @@ struct WeatherDay: Codable {
     //    var wind: Wind?
     var weather: [WeatherParts]
 }
+
+

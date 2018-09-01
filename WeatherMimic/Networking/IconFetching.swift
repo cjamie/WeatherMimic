@@ -11,7 +11,7 @@ import os.log
 
 typealias ImageHandler = (ImageResult) -> Void
 
-protocol IconFetching {
+protocol IconFetching: Fetcher {
     var iconString: String { get }
     var fetchSession: URLSession { get }
     var iconRequest: URLRequest { get }
@@ -20,8 +20,17 @@ protocol IconFetching {
 }
 
 extension IconFetching {
+    
+    var iconString: String {
+        return NetworkConstants.WeatherIcon.defaultIconString // this will default to 10d
+    }
+
     var fetchSession: URLSession {
         return URLSession.shared
+    }
+    
+    var iconRequest: URLRequest {
+        return RequestFactory.shared.makeIconRequest(url: url)
     }
     
     func getIcon(completion: @escaping ImageHandler) -> (){
@@ -38,19 +47,26 @@ extension IconFetching {
 }
 
 //this will define the default url for IconFetching
-extension URLConstructible where Self: IconFetching{
+extension URLConstructible where Self: IconFetching {
     var host: String {
         return NetworkConstants.WeatherIcon.host
     }
     var scheme: String {
         return NetworkConstants.WeatherIcon.scheme
+        
     }
     var path: String {
-        return NetworkConstants.WeatherIcon.path
+        return String(format: NetworkConstants.Weather.path, iconString)
     }
+    
     var items: QueryPreferences {
-        return NetworkConstants.WeatherIcon.defaultItems
+        return NetworkConstants.WeatherIcon.defaultItems //this is just empty
     }
 }
 
+
+//TODO: overload this.
+struct IconFetchingConcrete: IconFetching {
+
+}
 

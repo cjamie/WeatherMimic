@@ -58,9 +58,26 @@ extension WeatherMimicManager: DayInfoDescribing {
     }
 }
 
-//extension WeatherMimic: HourlyForecastDescribing {
-//}
+extension WeatherMimicManager: HourlyForecastDescribing {
+    var horizontalDataSource: [AccuWeatherUnit] {
+        return forecast.list // this model has been adapted to suit accuweatherunit
+    }
+}
 
 
+//TODO: where does this belong?
+extension WeatherDay: AccuWeatherUnit {
+    var hourlyTime: Date {
+        return TimeManager(dt: dt).date
+    }
+    
+    var iconString: String {
+        return weather[0].icon
+    }
+    
+    var degree: Kelvin {
+        return main.temp
+    }
+}
 
 

@@ -23,6 +23,10 @@ protocol WeatherPresentationViewModelProtocol: class, WeatherFetching {
     
     func getTableSection(byRow row: Int) -> PresentationCells?
     func changeTableSections(to newSections: [PresentationCells]?)
+    
+    // for the horizontal scrolling cell
+    var numberOfHorizontalCells: Int { get }
+    
 }
 
 //this will be a class because we are maintaining the tableSections
@@ -45,8 +49,6 @@ final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
             print("this was updated to \($0)")
         }
     }
-    
-    
     
     //Helper functions
     
@@ -88,4 +90,10 @@ final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
             }
         }
     }
+    
+    //TODO: verify
+    var numberOfHorizontalCells: Int {
+        return manager.value?.horizontalDataSource.count ?? 0
+    }
+
 }

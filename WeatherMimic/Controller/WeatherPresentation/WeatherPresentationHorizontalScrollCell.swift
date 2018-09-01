@@ -12,36 +12,35 @@ import os.log
 final class WeatherPresentationHorizontalScrollCell: UICollectionViewCell {
     
     //this will have an array of items that can power a collectionview.
-    var boxedManager: Box<WeatherMimicManager?> = Box(nil) {
-        didSet {
-            boxedManager.bind {
-                [weak self] manager in //Question: is this weak self necessary here?
-                guard let strongSelf = self, let manager = manager else {
-                    os_log("DayInfo cell is nil")
-                    return
-                }
-//                let dayInfoAdapted: DayInfoDescribing = manager
-            }
-        }
-    }
+//    var boxedManager: Box<WeatherMimicManager?> = Box(nil) {
+//        didSet {
+//            boxedManager.bind {
+//                [weak self] manager in //Question: is this weak self necessary here?
+//                guard let strongSelf = self, let manager = manager else {
+//                    os_log("DayInfo cell is nil")
+//                    return
+//                }
+////                let dayInfoAdapted: DayInfoDescribing = manager
+//            }
+//        }
+//    }
     
+    //this will provide the list of items it needs.
+    var viewModel: WeatherPresentationViewModelProtocol!
+
 }
 
 //extension WeatherPresentationHorizontalScrollCell: UICollectionViewDataSource {
 //    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        guard let manager = boxedManager.value as? HourlyForecastDescribing else {
-//            os_log("missing manager value for horizontal collectionview")
-//            return 0
-//        }
-//        return manager.hourlyDatasource.count
 //    }
-//
+//    
 //    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: <#T##String#>, for: <#T##IndexPath#>) else {
-//            fatalError("bad cell")
-//        }
-//        return cell
+//        <#code#>
 //    }
-//
-//
+//    
+//    
 //}
+
+extension WeatherPresentationHorizontalScrollCell: UICollectionViewDelegate {
+    
+}

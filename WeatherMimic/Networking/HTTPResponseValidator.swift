@@ -31,6 +31,7 @@ enum FetchResult<T:Decodable> {
  */
 
 //T will be our type, and U will be the struct error type that conforms decodable and error
+//may be more accurate to call this a parseable http response validator (as it does not account for UIImages)
 struct HTTPResponseValidator<T: Decodable, U: Decodable & Error> {
     private let validResponseCodes = (200..<300)
     private let sessionTuple: (data: Data?, response: URLResponse?, error: Error?)

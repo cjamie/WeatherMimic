@@ -54,6 +54,33 @@ final class RequestFactory {
         return request
     }
     
+    
+    func makeIconRequest(url: URL,
+                        cachePolicy: URLRequest.CachePolicy = .reloadRevalidatingCacheData,
+                        timeoutInterval: TimeInterval = 1800,
+                        headerFields: HeaderFields = [:],
+                        requestType: HTTPRequestType = .GET) -> URLRequest {
+        let modificationBlock: RequestModifier = {
+            request in
+            
+            if request.allHTTPHeaderFields == nil {
+                request.allHTTPHeaderFields = [:]
+            }
+            
+            request.allHTTPHeaderFields = headerFields
+            request.url = url
+            request.cachePolicy = cachePolicy
+            request.timeoutInterval = timeoutInterval
+            request.httpMethod = requestType.rawValue
+        }
+        
+        let request = URLRequest.build(modificationBlock, url: url)
+        
+        privatePrint(request)
+        return request
+    }
+    
+    
     private func privatePrint(_ request: URLRequest) {
         let printables: [Any] = [
             request.allHTTPHeaderFields ?? [:],

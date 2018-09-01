@@ -14,7 +14,7 @@ enum WeatherUnit {
     case websiteDefault
 }
 
-extension WeatherUnit{
+extension WeatherUnit {
     init(string: String?) {
 
         //TODO: find a way to handle this more elegantly.
