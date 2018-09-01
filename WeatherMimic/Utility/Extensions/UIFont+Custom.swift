@@ -12,5 +12,10 @@ extension UIFont {
     static func from(nameSize tuple: NameSizeTuple) -> UIFont {
         return self.init(name: tuple.name, size: tuple.size) ?? systemFont(ofSize: tuple.size)
     }
+    
+    //add another with option to add in custom size
+    static func from(_ preset: FontPresent2) -> UIFont {
+        return preset.font
+    }
 }
 

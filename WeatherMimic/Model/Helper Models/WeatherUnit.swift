@@ -15,7 +15,13 @@ enum WeatherUnit {
 }
 
 extension WeatherUnit{
-    init(string: String) {
+    init(string: String?) {
+
+        //TODO: find a way to handle this more elegantly.
+        if let _ = string {
+            self = .websiteDefault
+        }
+        
         switch string {
         case "imperial":
             self = .imperial

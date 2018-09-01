@@ -12,13 +12,10 @@ protocol WalkThroughViewModelProtocol{
     
 }
 
-class WalkThroughViewModel: WalkThroughViewModelProtocol{
+//this will be a controller with a collection view that slides horizontally
+final class WalkThroughViewModel: WalkThroughViewModelProtocol{
 //    weak var delegate: WalkthroughController
     
     //TODO: make this weak with a protocol. 
     var delegate: WalkthroughController?
-
-    init(){
-        
-    }
 }

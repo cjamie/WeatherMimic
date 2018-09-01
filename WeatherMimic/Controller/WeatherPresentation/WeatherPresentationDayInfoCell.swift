@@ -56,21 +56,11 @@ final class WeatherPresentationDayInfoCell: UICollectionViewCell {
 }
 
 extension WeatherPresentationDayInfoCell: ViewHeightDelegate {
-
     //TODO: figure out content hugging priority
     var viewHeight: CGFloat {
- 
-        let allLabels = [weekdayLabel, todayLabel, highTempLabel, lowTempLabel].compactMap{$0}
-        
+        let allLabels = [weekdayLabel, todayLabel, highTempLabel, lowTempLabel].compactMap{ $0 }
         allLabels.forEach{ $0.sizeToFit() }
-        
-        let temp = allLabels.map{$0.frame.height}
-        print("printing all of the heights: ")
-        temp.forEach {  print($0) }
-        let finalHeight = allLabels.map{$0.frame.height}.max() ?? 0    
-
-        
-        print("final height determined to be: \(finalHeight)")
+        let finalHeight = allLabels.map{ $0.frame.height }.max() ?? 0
         return finalHeight
     }
 }

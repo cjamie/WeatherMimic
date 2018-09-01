@@ -141,8 +141,9 @@ extension WeatherPresentationController: UICollectionViewDelegateFlowLayout{
             headlineCell.boxedManager = viewModel.manager
             height = headlineCell.viewHeight
         case .temperature:
-            //TODO: dynamically size
-            height = 100 //hardcoding for now.
+            let temperatureCell = WeatherPresentationTemperatureCell()
+            temperatureCell.boxedManager = viewModel.manager
+            height = temperatureCell.viewHeight
         case .dayInfo:
             if let dayInfoCell = WeatherPresentationDayInfoCell.fromNib{
                 dayInfoCell.boxedManager = viewModel.manager

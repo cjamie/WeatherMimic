@@ -45,9 +45,13 @@ final class WeatherPresentationTemperatureCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    private func anchorSubviews(){
-        
+}
+
+extension WeatherPresentationTemperatureCell: ViewHeightDelegate{
+    var viewHeight: CGFloat{
+        let myHeight = (temperatureLabel.text ?? "").height(withConstrainedWidth: UIScreen.main.bounds.width, font: temperatureLabel.font)
+        print("temperature cell height calculated to be \(myHeight)")
+        return myHeight
     }
 }
+

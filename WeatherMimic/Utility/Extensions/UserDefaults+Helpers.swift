@@ -9,13 +9,9 @@
 import Foundation
 
 extension UserDefaults {
-    private enum Constants{
-        static let weatherUnit = "weatherUnit"
-    }
-    
-    static var getWeatherUnit: WeatherUnit {
-        let stringValue = standard.string(forKey: Constants.weatherUnit) ?? ""
-        let unit =  WeatherUnit(string: stringValue)
+    var getWeatherUnit: WeatherUnit {
+        let stringValue = string(forKey: UserDefaultKeys.weatherUnit)
+        let unit = WeatherUnit(string: stringValue)
         return unit
     }
 }

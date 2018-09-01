@@ -33,9 +33,8 @@ final class WeatherPresentationHeadlineCell: UICollectionViewCell {
                 let headlineAdapted: HeadlineDescribing? = manager
                 strongSelf.cityLabel.text = headlineAdapted?.cityName
                 
+//  we can use this to verify that height will dynamically size.
 //                strongSelf.descriptionLabel.text = "Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary "
-
-                
                 
                 strongSelf.descriptionLabel.text = headlineAdapted?.weatherDescription
             }
@@ -114,8 +113,7 @@ extension WeatherPresentationHeadlineCell: ViewHeightDelegate {
         //description label calculation
         let descriptionLabelHeight = (descriptionLabel.text ?? "").height(withConstrainedWidth: cityLabelWidth, font: descriptionLabel.font)
         
-        let totalHeight =  [cityLabelHeight, descriptionLabelHeight ].reduce(baseHeight, +)
-
+        let totalHeight =  [ cityLabelHeight, descriptionLabelHeight ].reduce(baseHeight, +)
         print("calculated total height is \(totalHeight)")
         return totalHeight
     }

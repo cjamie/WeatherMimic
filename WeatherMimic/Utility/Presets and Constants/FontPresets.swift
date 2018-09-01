@@ -19,24 +19,34 @@ enum FontPresets {
     static let temperatureLabel: NameSizeTuple = ("AvenirNext-Medium", 50)
     
     //dayInfo cell
-    static let weekday: NameSizeTuple = ("AvenirNext-Medium", 28)
-    static let todayText: NameSizeTuple = ("AvenirNext-Medium", 26)
+    static let weekday: NameSizeTuple = ("AvenirNext-Medium", 24)
+    static let todayText: NameSizeTuple = ("AvenirNext-Medium", 20)
     
     //general
     static let AvenirNextMedium26: NameSizeTuple = ("AvenirNext-Medium", 26)
+    
 }
 
-//alternatively we can use an associated type enum that takes in an int
-enum FontPreset2{
+enum FontPresent2{
     case avenirNextMedium(CGFloat)
+    case avenirNextDemiBold(CGFloat)
+    case avenirBlack(CGFloat)
 }
 
-extension FontPreset2{
+extension FontPresent2 {
     var font: UIFont {
+        var retVal: UIFont?
+        
         switch self{
-        case .avenirNextMedium(let x):
-            return UIFont(name: "AvenirNext-Medium", size: x) ?? UIFont.systemFont(ofSize: x)
+        case .avenirBlack(let size):
+            retVal = UIFont(name: "Avenir-Black", size: size)
+        case .avenirNextDemiBold(let size):
+            retVal = UIFont(name: "AvenirNext-DemiBold", size: size)
+        case .avenirNextMedium(let size):
+            retVal = UIFont(name: "AvenirNext-Medium", size: size)
         }
+        
+        return retVal ?? UIFont.systemFont(ofSize: 8)
     }
 }
 

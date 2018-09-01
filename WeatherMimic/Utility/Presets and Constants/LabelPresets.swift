@@ -14,7 +14,8 @@ enum LabelPresets{
     static let cityNameLabelModifer: LabelBuilder = {
         label in
         label.text = "{FPO: Temporary City Name}"
-        label.font = UIFont.from(nameSize: FontPresets.headlineCity)
+        let headlineCityFont = UIFont.from(.avenirNextDemiBold(40))
+        label.font = headlineCityFont
         label.numberOfLines = 0
         label.textColor = UIColor.white
         label.textAlignment = .center

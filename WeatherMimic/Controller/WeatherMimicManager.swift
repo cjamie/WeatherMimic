@@ -41,8 +41,7 @@ extension WeatherMimicManager: TemperatureDescribing {
     }
     
     var weatherUnit: WeatherUnit {
-        //TODO: make this an extension.
-        return UserDefaults.getWeatherUnit
+        return UserDefaults.standard.getWeatherUnit
     }
 }
 
