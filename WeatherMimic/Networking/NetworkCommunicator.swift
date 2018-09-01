@@ -18,6 +18,7 @@ final class NetworkCommunicator: WeatherFetching, AuthTokenFetching {
             self?.getWeatherData(completion: completion)
         }
     }
+    
 }
 
 
