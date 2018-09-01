@@ -25,6 +25,7 @@ enum FetchResult<T:Decodable> {
         .deserializationError
  this will NOT check for the following NetworkError cases:
         .malformedURL
+        .badImage
  
  the reason for this is that malformedURL gets handled before we reach here but this will handle everything else
  */

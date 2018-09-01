@@ -13,7 +13,7 @@ import os.log
 //this will be responsible for fetching auth token
 typealias AuthCompletion = (AuthToken) -> ()
 
-protocol AuthTokenFetching {
+protocol AuthTokenFetching: Fetcher {
     func getAuthToken(_ completion: @escaping AuthCompletion)
 }
 
@@ -25,4 +25,6 @@ extension AuthTokenFetching {
         completion(authToken) //this is just a query parameter? not in the http fields?
     }
 }
+
+
 

@@ -27,7 +27,6 @@ extension NSAttributedString {
     func height(withConstrainedWidth width: CGFloat) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
         let boundingBox = boundingRect(with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil)
-        
         return ceil(boundingBox.height)
     }
 }

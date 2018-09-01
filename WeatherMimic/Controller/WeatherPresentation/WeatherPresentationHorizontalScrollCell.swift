@@ -11,6 +11,7 @@ import os.log
 
 final class WeatherPresentationHorizontalScrollCell: UICollectionViewCell {
     
+    //this will have an array of items that can power a collectionview.
     var boxedManager: Box<WeatherMimicManager?> = Box(nil) {
         didSet {
             boxedManager.bind {

@@ -17,6 +17,7 @@ enum NetworkErrors: Error {
     case noResponse
     case deserializationError //or invalidJSON
     case errorResponse(Error & Decodable)
+    case badImage
 }
 
 extension NetworkErrors: LocalizedError {
@@ -36,6 +37,8 @@ extension NetworkErrors: LocalizedError {
             descriptionString = NSLocalizedString("error trying to decode json", comment: "deserializationError")
         case .errorResponse(let x):
             descriptionString = NSLocalizedString("Server responded with an error json", comment: "errorResponse:\(x)")
+        case .badImage:
+            descriptionString = NSLocalizedString("Unable to create image with data", comment: "bad image")
         }
         
         return descriptionString

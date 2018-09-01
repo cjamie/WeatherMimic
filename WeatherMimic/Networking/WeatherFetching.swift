@@ -61,7 +61,5 @@ extension WeatherFetching {
         fetchSession.dataTask(with: weatherRequest, completionHandler: handler).resume()
     }
 
-    
-    
 }
 

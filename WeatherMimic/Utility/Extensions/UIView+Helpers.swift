@@ -43,6 +43,7 @@ extension UIView {
 
 
 extension UIView {
+    //this will return a mutable instance of a UIView type.
     static func build<T:UIView>(block: (T)->() ) -> T {
         let placeholder = T()
         block(placeholder)
