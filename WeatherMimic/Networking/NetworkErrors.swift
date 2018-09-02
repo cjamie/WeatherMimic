@@ -9,6 +9,7 @@
 import Foundation
 
 typealias ResponseCode = Int
+typealias DecodableError = Error & Decodable
 
 enum NetworkErrors: Error {
     case malformedURL
@@ -16,7 +17,7 @@ enum NetworkErrors: Error {
     case noData
     case noResponse
     case deserializationError //or invalidJSON
-    case errorResponse(Error & Decodable)
+    case errorResponse(DecodableError)
     case badImage
 }
 

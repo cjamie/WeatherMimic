@@ -24,10 +24,6 @@ extension IconFetching {
     var iconString: String {
         return NetworkConstants.WeatherIcon.defaultIconString // this will default to 10d
     }
-
-    var fetchSession: URLSession {
-        return URLSession.shared
-    }
     
     var iconRequest: URLRequest {
         return RequestFactory.shared.makeIconRequest(url: url)
@@ -42,7 +38,9 @@ extension IconFetching {
             completion(result)
         }
         
-        fetchSession.dataTask(with: iconRequest, completionHandler: handler).resume()
+        fetchSession
+            .dataTask(with: iconRequest, completionHandler: handler)
+            .resume()
     }
 }
 

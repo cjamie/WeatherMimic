@@ -72,12 +72,11 @@ enum ViewPresets{
     }
 
 
-    static let iconView: (UIImageView) -> Void = {
+    static let iconViewModifier: (UIImageView) -> Void = {
         imageView in
         //use a placeholder image in there for now.
         let temp = imageView
-        imageView.image = UIImage(named: "<#T##String#>")
-        return imageView
+        imageView.image = #imageLiteral(resourceName: "Umbrella") //placeholder image
     }
 
 }

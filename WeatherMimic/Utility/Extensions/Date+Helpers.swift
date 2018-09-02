@@ -13,6 +13,7 @@ enum DateFormat: String {
     case weekDay = "EEEE"
 }
 
+//TODO: may be better approach to make this an extension of the formatter so we don't need to instantiate every time.
 extension Date {
     func string(forDateFormat dateFormat: DateFormat) -> String {
         //TODO: is there a way to improve this so I don't need to instantiate a formatter each time.

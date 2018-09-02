@@ -46,7 +46,7 @@ final class WeatherPresentationHorizontalScrollCell: UICollectionViewCell {
 
 extension WeatherPresentationHorizontalScrollCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.numberOfHorizontalCells
+        return viewModel.numberOfAccuweatherCells
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

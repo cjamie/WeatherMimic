@@ -15,7 +15,7 @@ enum PresentationCells {
 }
 
 protocol WeatherPresentationViewModelProtocol: class, WeatherFetching {
-    var manager: Box<WeatherMimicManager?> { get set}
+    var manager: Box<WeatherForecastDataManager?> { get set}
     
     var delegate: WeatherPresentationControllerProtocol? { get set }
     var handleFetchResult: WeatherForecastHandler? { get set }
@@ -25,7 +25,7 @@ protocol WeatherPresentationViewModelProtocol: class, WeatherFetching {
     func changeTableSections(to newSections: [PresentationCells]?)
     
     // for the horizontal scrolling cell
-    var numberOfHorizontalCells: Int { get }
+    var numberOfAccuweatherCells: Int { get }
     
 }
 
@@ -33,7 +33,7 @@ protocol WeatherPresentationViewModelProtocol: class, WeatherFetching {
 final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
     
     //we want to be able to set the manager from inside here.
-    var manager: Box<WeatherMimicManager?> = Box(nil)
+    var manager: Box<WeatherForecastDataManager?> = Box(nil)
     
     var delegate: WeatherPresentationControllerProtocol?
     var tableSections: Box<[PresentationCells]?> //we don't want caller to have direct access to this.
@@ -77,7 +77,7 @@ final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
             print(err.localizedDescription)
         case .success(let forecastInstance):
             print("handling successful network call!")
-            let myManager = WeatherMimicManager(forecast: forecastInstance)
+            let myManager = WeatherForecastDataManager(forecast: forecastInstance)
             self?.manager = Box(myManager)
             
             //this might be responsibility of the cell
@@ -92,7 +92,7 @@ final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
     }
     
     //TODO: verify
-    var numberOfHorizontalCells: Int {
+    var numberOfAccuweatherCells: Int {
         return manager.value?.horizontalDataSource.count ?? 0
     }
 

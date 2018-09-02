@@ -29,7 +29,7 @@ final class WeatherPresentationAccuCell: UICollectionViewCell {
 
     let imageView: UIImageView = {
         UIView.build(block: LabelPresets.temperatureLabelModifier)
-    }P()
+    }()
     
     
     override init(frame: CGRect) {
