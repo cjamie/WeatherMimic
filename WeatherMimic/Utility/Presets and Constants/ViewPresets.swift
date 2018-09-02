@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum LabelPresets{
+enum ViewPresets{
     //MARK: Headline Cell
     
     static let cityNameLabelModifer: LabelBuilder = {
@@ -47,4 +47,37 @@ enum LabelPresets{
         label.lineBreakMode = .byWordWrapping
 
     }
+    
+    static let triHourlyLabelModifier: LabelBuilder = {
+        label in
+        label.text = "{FPO: Temporary Hour Name}"
+        label.font = UIFont.from(.avenirNextMedium(26))
+        label.textAlignment = .center
+        label.backgroundColor = UIColor.darkGray
+        label.numberOfLines = 1
+        label.adjustsFontSizeToFitWidth = true
+//        label.lineBreakMode = .byWordWrapping
+        
+    }
+    
+    static let smallTemperatureLabelModifier: LabelBuilder = {
+        label in
+        label.text = "{FPO: Temporary Tempature Name}"
+        label.textAlignment = .center
+        label.textColor = UIColor.white
+        label.font = UIFont.from(.avenirNextMedium(14))
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        
+    }
+
+
+    static let iconView: (UIImageView) -> Void = {
+        imageView in
+        //use a placeholder image in there for now.
+        let temp = imageView
+        imageView.image = UIImage(named: "<#T##String#>")
+        return imageView
+    }
+
 }

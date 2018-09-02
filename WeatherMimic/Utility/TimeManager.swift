@@ -17,4 +17,5 @@ struct TimeManager {
         let unixTime = Double(dt)
         return Date(timeIntervalSince1970: unixTime)
     }
+    
 }

@@ -29,7 +29,7 @@ final class WeatherPresentationTemperatureCell: UICollectionViewCell {
     
     
     lazy var temperatureLabel: UILabel = {
-       UIView.build(block: LabelPresets.temperatureLabelModifier)
+       UIView.build(block: ViewPresets.temperatureLabelModifier)
     }()
     
     override init(frame: CGRect) {

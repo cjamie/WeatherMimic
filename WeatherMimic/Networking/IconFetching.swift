@@ -33,7 +33,7 @@ extension IconFetching {
         return RequestFactory.shared.makeIconRequest(url: url)
     }
     
-    func getIcon(completion: @escaping ImageHandler) -> (){
+    func getIcon(completion: @escaping ImageHandler) -> () {
         fetchSession.invalidateAndCancel()
         
         let handler: (Data?, URLResponse?, Error?) -> () = {

@@ -53,8 +53,11 @@ final class WeatherPresentationController: UIViewController {
         cv.dataSource = self
         cv.isPagingEnabled = true
         
+        //register cells
         cv.register(WeatherPresentationHeadlineCell.self, forCellWithReuseIdentifier: WeatherPresentationHeadlineCell.reuseIdentifier)
         cv.register(WeatherPresentationTemperatureCell.self, forCellWithReuseIdentifier: WeatherPresentationTemperatureCell.reuseIdentifier)
+        
+        //register nibs
         cv.register(WeatherPresentationDayInfoCell.nib, forCellWithReuseIdentifier: WeatherPresentationDayInfoCell.reuseIdentifier)
         
         return cv

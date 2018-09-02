@@ -43,11 +43,11 @@ final class WeatherPresentationHeadlineCell: UICollectionViewCell {
     
     // View Elements
     lazy var cityLabel: UILabel = {
-        UIView.build(block: LabelPresets.cityNameLabelModifer)
+        UIView.build(block: ViewPresets.cityNameLabelModifer)
     }()
     
     lazy var descriptionLabel: UILabel = {
-        UIView.build(block: LabelPresets.descriptionLabelModifier)
+        UIView.build(block: ViewPresets.descriptionLabelModifier)
     }()
 
     // init

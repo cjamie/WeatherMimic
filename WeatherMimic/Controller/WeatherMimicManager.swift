@@ -64,7 +64,6 @@ extension WeatherMimicManager: HourlyForecastDescribing {
     }
 }
 
-
 //TODO: where does this belong?
 extension WeatherDay: AccuWeatherUnit {
     var hourlyTime: Date {
