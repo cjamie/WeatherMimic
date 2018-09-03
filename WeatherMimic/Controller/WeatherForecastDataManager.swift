@@ -18,12 +18,6 @@ final class WeatherForecastDataManager {
     }
 }
 
-extension WeatherForecastDataManager: WeatherPresentationDescribing {
-    var stateName: String {
-        return forecast.city.name
-    }
-}
-
 extension WeatherForecastDataManager: HeadlineDescribing {
     var cityName: String {
         return forecast.city.name
