@@ -12,10 +12,11 @@ enum PresentationCells {
     case headline
     case temperature
     case dayInfo
+    case horizontalAccu
 }
 
 protocol WeatherPresentationViewModelProtocol: class, WeatherFetching {
-    var manager: Box<WeatherForecastDataManager?> { get set}
+    var manager: Box<WeatherForecastDataManager?> { get set }
     
     var delegate: WeatherPresentationControllerProtocol? { get set }
     var handleFetchResult: WeatherForecastHandler? { get set }
@@ -37,12 +38,13 @@ final class WeatherPresentationViewModel: WeatherPresentationViewModelProtocol {
     
     var delegate: WeatherPresentationControllerProtocol?
     var tableSections: Box<[PresentationCells]?> //we don't want caller to have direct access to this.
+    //TODO: this needs to be used. 
     let networkServices: NetworkCommunicator = NetworkCommunicator()
     
     init(_ controller: WeatherPresentationControllerProtocol) {
         self.delegate = controller
         
-        let initialSections: [PresentationCells] = [.headline, .temperature, .dayInfo]
+        let initialSections: [PresentationCells] = [.headline, .temperature, .dayInfo, .horizontalAccu]
         tableSections = Box(initialSections)
         
         tableSections.bind {

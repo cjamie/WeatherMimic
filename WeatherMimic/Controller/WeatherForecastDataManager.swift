@@ -62,6 +62,14 @@ extension WeatherForecastDataManager: HourlyForecastDescribing {
     var horizontalDataSource: [AccuWeatherUnit] {
         return forecast.list // this model has been adapted to suit accuweatherunit
     }
+    var horizontalDataSourceCount: Int {
+        return horizontalDataSource.count
+    }
+    
+    func getUnit(at indexPath: IndexPath)-> AccuWeatherUnit {
+        return forecast.list[indexPath.row]
+    }
+    
 }
 
 //TODO: where does this belong?

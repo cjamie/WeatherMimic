@@ -9,33 +9,47 @@
 import UIKit
 import os.log
 
+//TODO; wwant ot set self to be a delegate.
 final class WeatherPresentationHorizontalScrollCell: UICollectionViewCell {
     
-    //this will provide the list of items it needs.
-    var viewModel: WeatherPresentationViewModelProtocol!
+    static let reuseIdentifier = "WeatherPresentationHorizontalScrollCell"
     
-    lazy var cv: UICollectionView = {
+    //this will provide a method data source, and the count
+    var boxedManager: Box<WeatherForecastDataManager?> = Box(nil) {
+        didSet {
+            
+            //TODO: use a delegate approach instead.
+            boxedManager.bind {
+                [weak self] manager in
+                self?.horizontalCV.reloadData()
+            }
+        }
+    }
+    
+    lazy var horizontalCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
+        layout.scrollDirection = .horizontal
         layout.sectionInset = .zero
-        layout.minimumLineSpacing = 0// horizontal spacing betweencells.
+        layout.minimumLineSpacing = 10 // horizontal spacing betweencells.
+        
+        //
+        layout.itemSize = CGSize(width: 100, height: 300)
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
         cv.dataSource = self
-        cv.isPagingEnabled = true
+        cv.isPagingEnabled = false
         
-        cv.register(WeatherPresentationHeadlineCell.self, forCellWithReuseIdentifier: WeatherPresentationHeadlineCell.reuseIdentifier)
-        cv.register(WeatherPresentationTemperatureCell.self, forCellWithReuseIdentifier: WeatherPresentationTemperatureCell.reuseIdentifier)
-        cv.register(WeatherPresentationDayInfoCell.nib, forCellWithReuseIdentifier: WeatherPresentationDayInfoCell.reuseIdentifier)
-        
+        cv.register(WeatherPresentationAccuCell.self, forCellWithReuseIdentifier: WeatherPresentationAccuCell.reuseIdentifier)
+        cv.backgroundColor = UIColor.yellow
         return cv
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(cv)
-        cv.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
+        print("adding the horizontalCV to subview")
+        addSubview(horizontalCV)
+        horizontalCV.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -46,16 +60,23 @@ final class WeatherPresentationHorizontalScrollCell: UICollectionViewCell {
 
 extension WeatherPresentationHorizontalScrollCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.numberOfAccuweatherCells
+        return boxedManager.value?.horizontalDataSourceCount ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: <#T##String#>, for: <#T##IndexPath#>)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherPresentationAccuCell.reuseIdentifier, for: indexPath) as? WeatherPresentationAccuCell else {
+            fatalError("bad cell")
+        }
+        print("setting the accuweatherunit")
+
+        let unit = boxedManager.value?.getUnit(at: indexPath)
+        cell.boxedManager = Box(unit)
+        return cell
     }
 
-
+    
 }
 
 extension WeatherPresentationHorizontalScrollCell: UICollectionViewDelegate {
-    
+
 }

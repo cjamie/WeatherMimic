@@ -7,47 +7,72 @@
 //
 
 import UIKit
+import os.log
+//TODO: this cell needs a view model.
 
 final class WeatherPresentationAccuCell: UICollectionViewCell {
     
-    
-    //TODO: does this work?
-    override var subviews: [UIView] {
-        //hourLabel, iconImage, temperature (in celsius)
-        
-        return [triHourlyLabel, tempLabel]
+    static let reuseIdentifier = "WeatherPresentationAccuCell"
+
+    var boxedManager: Box<AccuWeatherUnit?> = Box(nil) {
+        didSet {
+            guard let value = boxedManager.value else {return}
+            print("accuweather cell set with a value \(value)")
+            boxedManager.bind {
+                [weak self] unit in //Question: is this weak self necessary here?
+                guard let strongSelf = self else {
+                    os_log("accucell self is nil")
+                    return
+                }
+                guard let unitAdapted: AccuWeatherUnit = unit else {
+                    return
+                }
+                strongSelf.triHourlyLabel.text = "\(unitAdapted.hourlyTime)"
+
+//                strongSelf.triHourlyLabel.text = "\(unitAdapted?.hourlyTime)"
+//                strongSelf.tempLabel.text = "\(unitAdapted?.degree)"
+                //TODO: add in the weather icon.
+            }
+        }
     }
+
     
     
-    let triHourlyLabel: UILabel = {
-        UILabel.build(block: LabelPresets.triHourlyLabelModifier)
+    private let triHourlyLabel: UILabel = {
+        UILabel.build(block: ViewPresets.triHourlyLabelModifier)
     }()
     
-    let tempLabel: UILabel = {
-        UIView.build(block: LabelPresets.smallTemperatureLabelModifier)
+    private let tempLabel: UILabel = {
+        UIView.build(block: ViewPresets.smallTemperatureLabelModifier)
     }()
 
-    let imageView: UIImageView = {
-        UIView.build(block: LabelPresets.temperatureLabelModifier)
+    private let imageView: UIImageView = {
+        UIView.build(block: ViewPresets.iconViewModifier)
     }()
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-//        subviewsToAdd.forEach( addSubview )
+        print("printing subviews0 \(subviews.count)")
+
+        [triHourlyLabel, tempLabel, imageView].forEach( addSubview )
+
+        print("printing subviews \(subviews.count)")
         backgroundColor = UIColor.red
+        
+        
+        //anchoring logic
+        triHourlyLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 16, left: 16, bottom: 0, right: 16))
+        
+        imageView.anchor(top: triHourlyLabel.bottomAnchor, leading: triHourlyLabel.leadingAnchor, bottom: nil, trailing: triHourlyLabel.trailingAnchor, padding: .zero, size: .init(width: 0, height: frame.width))
+        tempLabel.anchor(top: imageView.bottomAnchor, leading: triHourlyLabel.leadingAnchor, bottom: bottomAnchor, trailing: triHourlyLabel.trailingAnchor)
+        tempLabel.setContentHuggingPriority(.init(rawValue: 252), for: .vertical)
+        
+        
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-
-extension WeatherPresentationAccuCell : ViewHeightDelegate {
-    var viewHeight: CGFloat {
-        return 100 //TODO: calculate dynamic height
-    }
-    
-
 }

@@ -56,10 +56,10 @@ final class WeatherPresentationController: UIViewController {
         //register cells
         cv.register(WeatherPresentationHeadlineCell.self, forCellWithReuseIdentifier: WeatherPresentationHeadlineCell.reuseIdentifier)
         cv.register(WeatherPresentationTemperatureCell.self, forCellWithReuseIdentifier: WeatherPresentationTemperatureCell.reuseIdentifier)
-        
+        cv.register(WeatherPresentationHorizontalScrollCell.self, forCellWithReuseIdentifier: WeatherPresentationHorizontalScrollCell.reuseIdentifier)
+
         //register nibs
         cv.register(WeatherPresentationDayInfoCell.nib, forCellWithReuseIdentifier: WeatherPresentationDayInfoCell.reuseIdentifier)
-        
         return cv
     }()
     
@@ -91,6 +91,8 @@ extension WeatherPresentationController: UICollectionViewDataSource {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherPresentationTemperatureCell.reuseIdentifier, for: indexPath)
         case .dayInfo:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherPresentationDayInfoCell.reuseIdentifier, for: indexPath)
+        case .horizontalAccu:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherPresentationHorizontalScrollCell.reuseIdentifier, for: indexPath)
         }
         
         configureCell(cell: cell, indexPath: indexPath)
@@ -115,20 +117,23 @@ extension WeatherPresentationController: UICollectionViewDataSource {
             if let dayInfoCell = cell as? WeatherPresentationDayInfoCell {
                 dayInfoCell.boxedManager = viewModel.manager
             }
+        case .horizontalAccu:
+            if let horizontalCell = cell as? WeatherPresentationHorizontalScrollCell {
+                horizontalCell.boxedManager = viewModel.manager
+            }
         }
     }
 }
 
-//TODO: update individual cells on a need based basis.
-extension WeatherPresentationController: WeatherPresentationControllerProtocol{
-    func refreshUI(){
-        print("refreshing UI")
+//TODO: update individual cells on a need-based basis.
+extension WeatherPresentationController: WeatherPresentationControllerProtocol {
+    func refreshUI() {
         cv.reloadData()
     }
 }
 
 
-extension WeatherPresentationController: UICollectionViewDelegateFlowLayout{
+extension WeatherPresentationController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
@@ -148,12 +153,14 @@ extension WeatherPresentationController: UICollectionViewDelegateFlowLayout{
             temperatureCell.boxedManager = viewModel.manager
             height = temperatureCell.viewHeight
         case .dayInfo:
-            if let dayInfoCell = WeatherPresentationDayInfoCell.fromNib{
+            if let dayInfoCell = WeatherPresentationDayInfoCell.fromNib {
                 dayInfoCell.boxedManager = viewModel.manager
                 height = dayInfoCell.viewHeight
             } else {
                 height = 0
             }
+        case .horizontalAccu:
+            height = 300 //
         }
         
         return CGSize(width: view.frame.width, height: height)
