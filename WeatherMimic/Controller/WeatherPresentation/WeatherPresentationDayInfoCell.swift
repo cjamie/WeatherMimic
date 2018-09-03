@@ -21,14 +21,10 @@ final class WeatherPresentationDayInfoCell: UICollectionViewCell {
     @IBOutlet weak var lowTempLabel: UILabel!
     
     override func awakeFromNib() {
-        print("info cell awake from nib execution... come out from freezedry")
-
         weekdayLabel.font = UIFont.from(nameSize: FontPresets.weekday)
         todayLabel.font = UIFont.from(nameSize: FontPresets.todayText)
         highTempLabel.font = UIFont.from(nameSize: FontPresets.AvenirNextMedium26)
         lowTempLabel.font = UIFont.from(nameSize: FontPresets.AvenirNextMedium26)
-        
-        //TODO: is is better practice for it to referene all the same fonts?
     }
     
     var boxedManager: Box<WeatherForecastDataManager?> = Box(nil) {

@@ -16,7 +16,8 @@ enum FontPresets {
     static let headlineDescription: NameSizeTuple = ("AvenirNext-Light", 24)
 
     //temperature cell
-    static let temperatureLabel: NameSizeTuple = ("AvenirNext-Medium", 50)
+    //TODO: there seems to be some light shadowing we should look to add later
+    static let temperatureLabel: NameSizeTuple = ("AvenirNext-Light", 70)
     
     //dayInfo cell
     static let weekday: NameSizeTuple = ("AvenirNext-Medium", 24)

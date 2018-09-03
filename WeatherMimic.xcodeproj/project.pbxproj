@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1869CB5A213DCB6D00F0680E /* WeatherPresentationVerticalScrollCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1869CB59213DCB6D00F0680E /* WeatherPresentationVerticalScrollCell.swift */; };
+		1869CB5C213DD8B000F0680E /* VerticalScrollCellDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1869CB5B213DD8B000F0680E /* VerticalScrollCellDataSource.swift */; };
+		1869CB5E213DEE7300F0680E /* WeatherPresentationTopGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1869CB5D213DEE7300F0680E /* WeatherPresentationTopGridCell.swift */; };
 		8405B2922134677800A21D08 /* GenericBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8405B2912134677800A21D08 /* GenericBox.swift */; };
 		8405B2972134853D00A21D08 /* HeadlineDescribing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8405B2962134853D00A21D08 /* HeadlineDescribing.swift */; };
 		8405B2992134BE2500A21D08 /* ViewPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8405B2982134BE2400A21D08 /* ViewPresets.swift */; };
@@ -67,6 +70,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1869CB59213DCB6D00F0680E /* WeatherPresentationVerticalScrollCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPresentationVerticalScrollCell.swift; sourceTree = "<group>"; };
+		1869CB5B213DD8B000F0680E /* VerticalScrollCellDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalScrollCellDataSource.swift; sourceTree = "<group>"; };
+		1869CB5D213DEE7300F0680E /* WeatherPresentationTopGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPresentationTopGridCell.swift; sourceTree = "<group>"; };
 		8405B2912134677800A21D08 /* GenericBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericBox.swift; sourceTree = "<group>"; };
 		8405B2962134853D00A21D08 /* HeadlineDescribing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineDescribing.swift; sourceTree = "<group>"; };
 		8405B2982134BE2400A21D08 /* ViewPresets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPresets.swift; sourceTree = "<group>"; };
@@ -146,6 +152,7 @@
 				8432398D2136396600025220 /* TemperatureDescribing.swift */,
 				8432399821372C8A00025220 /* DayInfoDescribing.swift */,
 				84E4F0FE213743240090E6A5 /* HourlyForecastDescribing.swift */,
+				1869CB5B213DD8B000F0680E /* VerticalScrollCellDataSource.swift */,
 			);
 			path = WeatherPresentation;
 			sourceTree = "<group>";
@@ -311,6 +318,8 @@
 				843239912137224300025220 /* WeatherPresentationDayInfoCell.swift */,
 				84E4F1002137442F0090E6A5 /* WeatherPresentationHorizontalScrollCell.swift */,
 				84E4F10C213B59720090E6A5 /* WeatherPresentationAccuCell.swift */,
+				1869CB59213DCB6D00F0680E /* WeatherPresentationVerticalScrollCell.swift */,
+				1869CB5D213DEE7300F0680E /* WeatherPresentationTopGridCell.swift */,
 			);
 			path = WeatherPresentation;
 			sourceTree = "<group>";
@@ -421,6 +430,7 @@
 				8432398E2136396600025220 /* TemperatureDescribing.swift in Sources */,
 				84CE6E83212E248E00D2E4A7 /* NetworkConstants.swift in Sources */,
 				84CE6E69212C98FD00D2E4A7 /* WalkthroughController.swift in Sources */,
+				1869CB5A213DCB6D00F0680E /* WeatherPresentationVerticalScrollCell.swift in Sources */,
 				84CE6E96212E464300D2E4A7 /* WeatherParts.swift in Sources */,
 				84CE6E7F212CBE2900D2E4A7 /* WeatherPresentationViewModel.swift in Sources */,
 				84CE6EB12133378B00D2E4A7 /* Fetcher.swift in Sources */,
@@ -443,9 +453,11 @@
 				84CE6E7B212CB1F300D2E4A7 /* URLConstructible.swift in Sources */,
 				84CE6EA42130D59500D2E4A7 /* WeatherMimic.swift in Sources */,
 				84CE6E8E212E413A00D2E4A7 /* City.swift in Sources */,
+				1869CB5E213DEE7300F0680E /* WeatherPresentationTopGridCell.swift in Sources */,
 				84CE6EA92131DA8F00D2E4A7 /* WeatherPresentationHeadlineCell.swift in Sources */,
 				84CE6E94212E456400D2E4A7 /* Wind.swift in Sources */,
 				8405B2922134677800A21D08 /* GenericBox.swift in Sources */,
+				1869CB5C213DD8B000F0680E /* VerticalScrollCellDataSource.swift in Sources */,
 				84CE6E8C212E392500D2E4A7 /* WeatherDay.swift in Sources */,
 				8432399B21372E0D00025220 /* Date+Helpers.swift in Sources */,
 				84E4F0FF213743240090E6A5 /* HourlyForecastDescribing.swift in Sources */,

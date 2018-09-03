@@ -11,6 +11,7 @@
 
 //WeatherPresentation
 //TODO: add in the correct character
+"com.WeatherMimic.WeatherPresentation.temperatureDegreeWithInt" = "%d°";
 "com.WeatherMimic.WeatherPresentation.temperatureCelsius" = "%@°C";
 //"com.WeatherMimic.WeatherPresentation.today" = "TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY_TODAY";
 "com.WeatherMimic.WeatherPresentation.today" = "TODAY";

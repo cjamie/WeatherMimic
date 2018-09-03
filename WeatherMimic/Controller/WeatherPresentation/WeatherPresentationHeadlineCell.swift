@@ -32,10 +32,6 @@ final class WeatherPresentationHeadlineCell: UICollectionViewCell {
                 print("bind closure is called")
                 let headlineAdapted: HeadlineDescribing? = manager
                 strongSelf.cityLabel.text = headlineAdapted?.cityName
-                
-//  we can use this to verify that height will dynamically size.
-//                strongSelf.descriptionLabel.text = "Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary Temporary "
-                
                 strongSelf.descriptionLabel.text = headlineAdapted?.weatherDescription
             }
         }
