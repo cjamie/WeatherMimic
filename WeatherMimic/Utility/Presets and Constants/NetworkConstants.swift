@@ -20,7 +20,7 @@ enum NetworkConstants {
             "id":"3342",  //
             "q":"Boston", // q denotes the city
             "units":"Imperial", //default is already imperial 
-            "cnt":"5", //default number of dates will be this.
+            "cnt":"15", //default number of dates will be this.
             //API KEY
             "appid":"50a2ca8b91084f6abba83ae937599fb9"
         ]

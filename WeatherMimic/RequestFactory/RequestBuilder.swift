@@ -60,6 +60,7 @@ final class RequestFactory {
                         timeoutInterval: TimeInterval = 1800,
                         headerFields: HeaderFields = [:],
                         requestType: HTTPRequestType = .GET) -> URLRequest {
+
         let modificationBlock: RequestModifier = {
             request in
             

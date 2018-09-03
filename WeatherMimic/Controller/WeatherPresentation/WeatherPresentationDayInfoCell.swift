@@ -31,7 +31,7 @@ final class WeatherPresentationDayInfoCell: UICollectionViewCell {
         //TODO: is is better practice for it to referene all the same fonts?
     }
     
-    var boxedManager: Box<WeatherMimicManager?> = Box(nil) {
+    var boxedManager: Box<WeatherForecastDataManager?> = Box(nil) {
         didSet {
             boxedManager.bind {
                 [weak self] manager in //Question: is this weak self necessary here?

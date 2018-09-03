@@ -9,7 +9,7 @@
 import Foundation
 
 typealias Kelvin = Double
-private typealias UnitConversionClosure = (Double) -> (Double)
+private typealias UnitConversionClosure = (Double) -> Double
 
 //TODO: make some unit tests for this
 struct TemperatureManager {
@@ -30,7 +30,7 @@ struct TemperatureManager {
     }
     
     //T(K) = T(°C) + 273.15
-    init(celsius: Double){
+    init(celsius: Double) {
         let celsiusToKelvin: UnitConversionClosure = { $0 + Constants.kelvinZero }
         let kelvin = celsiusToKelvin(celsius)
         

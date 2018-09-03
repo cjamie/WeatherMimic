@@ -19,14 +19,11 @@ protocol IconFetching: Fetcher {
     func getIcon(completion: @escaping ImageHandler)
 }
 
+//will take in the default shared instance (won't be ephemeral) 
 extension IconFetching {
     
     var iconString: String {
         return NetworkConstants.WeatherIcon.defaultIconString // this will default to 10d
-    }
-
-    var fetchSession: URLSession {
-        return URLSession.shared
     }
     
     var iconRequest: URLRequest {
@@ -42,7 +39,9 @@ extension IconFetching {
             completion(result)
         }
         
-        fetchSession.dataTask(with: iconRequest, completionHandler: handler).resume()
+        fetchSession
+            .dataTask(with: iconRequest, completionHandler: handler)
+            .resume()
     }
 }
 
@@ -63,10 +62,3 @@ extension URLConstructible where Self: IconFetching {
         return NetworkConstants.WeatherIcon.defaultItems //this is just empty
     }
 }
-
-
-//TODO: overload this.
-struct IconFetchingConcrete: IconFetching {
-
-}
-

@@ -24,7 +24,6 @@ final class UserDefaultsManager {
             defaults.set(newValue, forKey: UserDefaultKeys.weatherUnit)
         }
     }
-    
 }
 
 

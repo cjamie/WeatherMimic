@@ -21,7 +21,7 @@ final class WeatherPresentationHeadlineCell: UICollectionViewCell {
     }
     
     //is it possible to bind thing without a didSet (its is dependent on a network call)
-    var boxedManager: Box<WeatherMimicManager?> = Box(nil) {
+    var boxedManager: Box<WeatherForecastDataManager?> = Box(nil) {
         didSet {
             boxedManager.bind {
                 [weak self] manager in //Question: is this weak self necessary here?

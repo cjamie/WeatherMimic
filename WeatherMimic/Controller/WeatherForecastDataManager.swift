@@ -10,7 +10,7 @@ import Foundation
 
 //this will be responsible for adapting the model to suit the needs of different screens.
 
-final class WeatherMimicManager {
+final class WeatherForecastDataManager {
     let forecast: WeatherForecast
     
     init(forecast: WeatherForecast) {
@@ -18,13 +18,13 @@ final class WeatherMimicManager {
     }
 }
 
-extension WeatherMimicManager: WeatherPresentationDescribing {
+extension WeatherForecastDataManager: WeatherPresentationDescribing {
     var stateName: String {
         return forecast.city.name
     }
 }
 
-extension WeatherMimicManager: HeadlineDescribing {
+extension WeatherForecastDataManager: HeadlineDescribing {
     var cityName: String {
         return forecast.city.name
     }
@@ -34,10 +34,10 @@ extension WeatherMimicManager: HeadlineDescribing {
     }
 }
 
-extension WeatherMimicManager: TemperatureDescribing {
+extension WeatherForecastDataManager: TemperatureDescribing {
     var temperature: String {
         let myTemp = String(forecast.list[0].main.temp)
-        return String(format: WeatherMimic.localizedString(for: "com.WeatherMimic.WeatherPresentation.temperature"), myTemp)
+        return String(format: WeatherMimic.localizedString(for: "com.WeatherMimic.WeatherPresentation.temperatureCelsius"), myTemp)
     }
     
     var weatherUnit: WeatherUnit {
@@ -46,7 +46,7 @@ extension WeatherMimicManager: TemperatureDescribing {
 }
 
 
-extension WeatherMimicManager: DayInfoDescribing {
+extension WeatherForecastDataManager: DayInfoDescribing {
     var weekDay: String {
         return Date().string(forDateFormat: .weekDay)
     }
@@ -58,24 +58,36 @@ extension WeatherMimicManager: DayInfoDescribing {
     }
 }
 
-extension WeatherMimicManager: HourlyForecastDescribing {
+extension WeatherForecastDataManager: HourlyForecastDescribing {
     var horizontalDataSource: [AccuWeatherUnit] {
         return forecast.list // this model has been adapted to suit accuweatherunit
     }
+    var horizontalDataSourceCount: Int {
+        return horizontalDataSource.count
+    }
+    
+    func getUnit(at indexPath: IndexPath)-> AccuWeatherUnit {
+        return forecast.list[indexPath.row]
+    }
+    
 }
 
 //TODO: where does this belong?
 extension WeatherDay: AccuWeatherUnit {
-    var hourlyTime: Date {
-        return TimeManager(dt: dt).date
+    var hourlyTime: String {
+        return "\(TimeManager(dt: dt).date.string(forDateFormat: .hour))"
+        
     }
     
     var iconString: String {
         return weather[0].icon
+        
+        
     }
     
-    var degree: Kelvin {
-        return main.temp
+    var degree: String {
+        let degreeString = String(main.temp)
+        return String(format: WeatherMimic.localizedString(for: "com.WeatherMimic.WeatherPresentation.temperatureCelsius"), degreeString)
     }
 }
 

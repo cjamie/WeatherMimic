@@ -13,7 +13,7 @@ final class WeatherPresentationTemperatureCell: UICollectionViewCell {
     
     static let reuseIdentifier = "WeatherPresentationTemperatureCell"
     
-    var boxedManager: Box<WeatherMimicManager?> = Box(nil) {
+    var boxedManager: Box<WeatherForecastDataManager?> = Box(nil) {
         didSet {
             boxedManager.bind {
                 [weak self] manager in //Question: is this weak self necessary here?
