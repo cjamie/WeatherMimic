@@ -13,7 +13,6 @@ enum ImageResult {
     case failure(Error)
 }
 
-
 struct HTTPImageResponseValidator{
     private let validResponseCodes = (200..<300)
     private let sessionTuple: (data: Data?, response: URLResponse?, error: Error?)

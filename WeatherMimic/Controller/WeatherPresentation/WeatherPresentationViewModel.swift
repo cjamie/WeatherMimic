@@ -15,9 +15,10 @@ enum PresentationCells {
     case horizontalAccu
 }
 
-protocol WeatherPresentationViewModelProtocol: class, WeatherFetching {
+protocol WeatherPresentationViewModelProtocol: class {
     var manager: Box<WeatherForecastDataManager?> { get set }
     
+    var networkServices: NetworkCommunicator { get }
     var delegate: WeatherPresentationControllerProtocol? { get set }
     var handleFetchResult: WeatherForecastHandler? { get set }
     var numberOfSections: Int { get }

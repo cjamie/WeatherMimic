@@ -11,6 +11,7 @@ import Foundation
 enum DateFormat: String {
     case weekdayMonthDayYear = "EEEE, MMMM dd, yyyy"
     case weekDay = "EEEE"
+    case hour = "h a"
 }
 
 //TODO: may be better approach to make this an extension of the formatter so we don't need to instantiate every time.

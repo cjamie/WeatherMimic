@@ -33,7 +33,7 @@ final class WeatherPresentationHorizontalScrollCell: UICollectionViewCell {
         layout.minimumLineSpacing = 10 // horizontal spacing betweencells.
         
         //
-        layout.itemSize = CGSize(width: 100, height: 300)
+        layout.itemSize = CGSize(width: 100, height: 150)
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self

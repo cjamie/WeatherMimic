@@ -37,7 +37,7 @@ extension WeatherForecastDataManager: HeadlineDescribing {
 extension WeatherForecastDataManager: TemperatureDescribing {
     var temperature: String {
         let myTemp = String(forecast.list[0].main.temp)
-        return String(format: WeatherMimic.localizedString(for: "com.WeatherMimic.WeatherPresentation.temperature"), myTemp)
+        return String(format: WeatherMimic.localizedString(for: "com.WeatherMimic.WeatherPresentation.temperatureCelsius"), myTemp)
     }
     
     var weatherUnit: WeatherUnit {
@@ -74,16 +74,20 @@ extension WeatherForecastDataManager: HourlyForecastDescribing {
 
 //TODO: where does this belong?
 extension WeatherDay: AccuWeatherUnit {
-    var hourlyTime: Date {
-        return TimeManager(dt: dt).date
+    var hourlyTime: String {
+        return "\(TimeManager(dt: dt).date.string(forDateFormat: .hour))"
+        
     }
     
     var iconString: String {
         return weather[0].icon
+        
+        
     }
     
-    var degree: Kelvin {
-        return main.temp
+    var degree: String {
+        let degreeString = String(main.temp)
+        return String(format: WeatherMimic.localizedString(for: "com.WeatherMimic.WeatherPresentation.temperatureCelsius"), degreeString)
     }
 }
 

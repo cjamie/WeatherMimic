@@ -51,7 +51,8 @@ enum ViewPresets{
     static let triHourlyLabelModifier: LabelBuilder = {
         label in
         label.text = "{FPO: Temporary Hour Name}"
-        label.font = UIFont.from(.avenirNextMedium(26))
+        label.textColor = .white
+//        label.font = UIFont.from(.avenirNextMedium(26))
         label.textAlignment = .center
         label.backgroundColor = UIColor.darkGray
         label.numberOfLines = 1
@@ -64,7 +65,7 @@ enum ViewPresets{
         label in
         label.text = "{FPO: Temporary Tempature Name}"
         label.textAlignment = .center
-        label.textColor = UIColor.white
+//        label.textColor = UIColor.white
         label.font = UIFont.from(.avenirNextMedium(14))
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -75,8 +76,10 @@ enum ViewPresets{
     static let iconViewModifier: (UIImageView) -> Void = {
         imageView in
         //use a placeholder image in there for now.
-        let temp = imageView
+        imageView.clipsToBounds = true
+        imageView.contentMode = UIViewContentMode.scaleAspectFit
         imageView.image = #imageLiteral(resourceName: "Umbrella") //placeholder image
+        imageView.backgroundColor = .green
     }
 
 }

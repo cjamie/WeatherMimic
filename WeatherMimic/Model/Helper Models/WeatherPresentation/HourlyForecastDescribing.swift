@@ -22,7 +22,7 @@ extension HourlyForecastDescribing {
 
 //this will decribe the tri-hourly time
 protocol AccuWeatherUnit {
-    var hourlyTime: Date { get }
+    var hourlyTime: String { get }
     var iconString: String { get }
-    var degree: Kelvin { get }
+    var degree: String { get }
 }

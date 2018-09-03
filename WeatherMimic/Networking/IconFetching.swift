@@ -19,6 +19,7 @@ protocol IconFetching: Fetcher {
     func getIcon(completion: @escaping ImageHandler)
 }
 
+//will take in the default shared instance (won't be ephemeral) 
 extension IconFetching {
     
     var iconString: String {
@@ -61,10 +62,3 @@ extension URLConstructible where Self: IconFetching {
         return NetworkConstants.WeatherIcon.defaultItems //this is just empty
     }
 }
-
-
-//TODO: overload this.
-struct IconFetchingConcrete: IconFetching {
-
-}
-

@@ -31,8 +31,9 @@ final class WeatherPresentationController: UIViewController {
         
         self.viewModel = WeatherPresentationViewModel(self)
         
+        //TODO /Question : does this make sense to do?
         guard let viewModelClosure = viewModel.handleFetchResult else {return}
-        viewModel.getWeather(completion: viewModelClosure)
+        viewModel.networkServices.getWeather(completion: viewModelClosure)
         
     }
     
@@ -77,26 +78,31 @@ extension WeatherPresentationController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell: UICollectionViewCell?
         
         //accessing via subscript.
-        guard let section = viewModel.getTableSection(byRow: indexPath.row) else {
-            fatalError()
-        }
+        guard let section = viewModel.getTableSection(byRow: indexPath.row) else { fatalError() }
 
+        
+        let identifier: String
+        
         switch section {
         case .headline:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherPresentationHeadlineCell.reuseIdentifier, for: indexPath)
+            identifier = WeatherPresentationHeadlineCell.reuseIdentifier
         case .temperature:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherPresentationTemperatureCell.reuseIdentifier, for: indexPath)
+            identifier = WeatherPresentationTemperatureCell.reuseIdentifier
         case .dayInfo:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherPresentationDayInfoCell.reuseIdentifier, for: indexPath)
+            identifier = WeatherPresentationDayInfoCell.reuseIdentifier
         case .horizontalAccu:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherPresentationHorizontalScrollCell.reuseIdentifier, for: indexPath)
+            identifier = WeatherPresentationHorizontalScrollCell.reuseIdentifier
         }
         
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
+
+
+        
+        
         configureCell(cell: cell, indexPath: indexPath)
-        return cell ?? UICollectionViewCell()
+        return cell
     }
     
     
@@ -160,7 +166,7 @@ extension WeatherPresentationController: UICollectionViewDelegateFlowLayout {
                 height = 0
             }
         case .horizontalAccu:
-            height = 300 //
+            height = 150 //
         }
         
         return CGSize(width: view.frame.width, height: height)

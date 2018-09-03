@@ -27,11 +27,8 @@ final class WeatherPresentationAccuCell: UICollectionViewCell {
                 guard let unitAdapted: AccuWeatherUnit = unit else {
                     return
                 }
-                strongSelf.triHourlyLabel.text = "\(unitAdapted.hourlyTime)"
-
-//                strongSelf.triHourlyLabel.text = "\(unitAdapted?.hourlyTime)"
-//                strongSelf.tempLabel.text = "\(unitAdapted?.degree)"
-                //TODO: add in the weather icon.
+                strongSelf.triHourlyLabel.text = unitAdapted.hourlyTime
+                strongSelf.tempLabel.text = unitAdapted.degree
             }
         }
     }
@@ -51,25 +48,25 @@ final class WeatherPresentationAccuCell: UICollectionViewCell {
     }()
     
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        print("printing subviews0 \(subviews.count)")
-
-        [triHourlyLabel, tempLabel, imageView].forEach( addSubview )
-
-        print("printing subviews \(subviews.count)")
-        backgroundColor = UIColor.red
-        
-        
+    private func setContentHuggingPriority() {
+        triHourlyLabel.setContentHuggingPriority(.init(rawValue: 253), for: .vertical)
+        imageView.setContentHuggingPriority(.init(rawValue: 252), for: .vertical)
+        tempLabel.setContentHuggingPriority(.init(rawValue: 251), for: .vertical)
+    }
+    
+    fileprivate func anchorSubviews() {
         //anchoring logic
         triHourlyLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 16, left: 16, bottom: 0, right: 16))
         
         imageView.anchor(top: triHourlyLabel.bottomAnchor, leading: triHourlyLabel.leadingAnchor, bottom: nil, trailing: triHourlyLabel.trailingAnchor, padding: .zero, size: .init(width: 0, height: frame.width))
         tempLabel.anchor(top: imageView.bottomAnchor, leading: triHourlyLabel.leadingAnchor, bottom: bottomAnchor, trailing: triHourlyLabel.trailingAnchor)
-        tempLabel.setContentHuggingPriority(.init(rawValue: 252), for: .vertical)
-        
-        
-        
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        [triHourlyLabel, tempLabel, imageView].forEach( addSubview )
+        anchorSubviews()
+        setContentHuggingPriority()
     }
     
     required init?(coder aDecoder: NSCoder) {

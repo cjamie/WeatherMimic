@@ -20,5 +20,4 @@ final class NetworkCommunicator: WeatherFetching, AuthTokenFetching, IconFetchin
             self?.getWeatherData(completion: completion)
         }
     }
-    
 }
