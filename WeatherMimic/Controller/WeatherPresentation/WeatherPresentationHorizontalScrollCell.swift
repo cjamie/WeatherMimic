@@ -11,29 +11,30 @@ import os.log
 
 //TODO; wwant ot set self to be a delegate.
 final class WeatherPresentationHorizontalScrollCell: UICollectionViewCell {
-    
     static let reuseIdentifier = "WeatherPresentationHorizontalScrollCell"
+    
+    enum Constants{
+        static let layoutItemSize = CGSize(width: 100, height: 150)
+    }
     
     //this will provide a method data source, and the count
     var boxedManager: Box<WeatherForecastDataManager?> = Box(nil) {
         didSet {
-            
-            //TODO: use a delegate approach instead.
-            boxedManager.bind {
-                [weak self] manager in
-                self?.horizontalCV.reloadData()
-            }
+            boxedManager.bind(closure: dataManagerClosure)
         }
+    }
+    
+    lazy var dataManagerClosure: (WeatherForecastDataManager?)->() = {
+        _ in
+        self.horizontalCV.reloadData()
     }
     
     lazy var horizontalCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = .zero
-        layout.minimumLineSpacing = 10 // horizontal spacing betweencells.
-        
-        //
-        layout.itemSize = CGSize(width: 100, height: 150)
+        layout.minimumLineSpacing = 0 // horizontal spacing betweencells.
+        layout.itemSize = Constants.layoutItemSize
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
@@ -55,7 +56,6 @@ final class WeatherPresentationHorizontalScrollCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 
 extension WeatherPresentationHorizontalScrollCell: UICollectionViewDataSource {
@@ -67,16 +67,14 @@ extension WeatherPresentationHorizontalScrollCell: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherPresentationAccuCell.reuseIdentifier, for: indexPath) as? WeatherPresentationAccuCell else {
             fatalError("bad cell")
         }
-        print("setting the accuweatherunit")
-
         let unit = boxedManager.value?.getUnit(at: indexPath)
         cell.boxedManager = Box(unit)
         return cell
     }
-
-    
 }
 
 extension WeatherPresentationHorizontalScrollCell: UICollectionViewDelegate {
-
+    var viewHeight: CGFloat {
+        return Constants.layoutItemSize.height
+    }
 }

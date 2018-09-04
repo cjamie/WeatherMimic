@@ -23,18 +23,14 @@ final class WeatherPresentationHeadlineCell: UICollectionViewCell {
     //is it possible to bind thing without a didSet (its is dependent on a network call)
     var boxedManager: Box<WeatherForecastDataManager?> = Box(nil) {
         didSet {
-            boxedManager.bind {
-                [weak self] manager in //Question: is this weak self necessary here?
-                guard let strongSelf = self else {
-                    os_log("cell self is nil")
-                    return
-                }
-                print("bind closure is called")
-                let headlineAdapted: HeadlineDescribing? = manager
-                strongSelf.cityLabel.text = headlineAdapted?.cityName
-                strongSelf.descriptionLabel.text = headlineAdapted?.weatherDescription
-            }
+            boxedManager.bind(closure: headlineDescribingClosure)
         }
+    }
+    
+    lazy var headlineDescribingClosure: (HeadlineDescribing?) -> () = {
+        guard let headlineAdapted = $0 else {return}
+        self.cityLabel.text = headlineAdapted.cityName
+        self.descriptionLabel.text = headlineAdapted.weatherDescription
     }
     
     // View Elements

@@ -68,7 +68,7 @@ extension WeatherForecastDataManager: HourlyForecastDescribing {
     
 }
 
-extension WeatherForecastDataManager: VerticalScrollCellDataSource{
+extension WeatherForecastDataManager: TopGridDataSource{
     var numberOfDays: Int {
         return forecast.list.count / 8
     }
@@ -80,7 +80,7 @@ extension WeatherForecastDataManager: VerticalScrollCellDataSource{
     }
 }
 
-protocol VerticalScrollCellDataSource: class {
+protocol TopGridDataSource: class {
     var numberOfDays: Int { get }
     var elements: [ShortDailyForecast] {get}
 }

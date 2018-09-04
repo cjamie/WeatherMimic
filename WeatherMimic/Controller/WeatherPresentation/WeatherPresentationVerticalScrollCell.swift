@@ -23,13 +23,13 @@ class WeatherPresentationVerticalScrollCell: UICollectionViewCell {
     
     fileprivate var tableSections: [VerticalCells] = []
     
-    weak var dataSource: VerticalScrollCellDataSource?
+    weak var dataSource: TopGridDataSource?
     
     lazy var verticalCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = .zero
-        layout.minimumLineSpacing = 0// horizontal spacing betweencells.
+        layout.minimumLineSpacing = 0 // horizontal spacing betweencells.
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
